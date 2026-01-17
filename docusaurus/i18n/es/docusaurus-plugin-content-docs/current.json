@@ -1,0 +1,62 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Fundamentals": {
+    "message": "Fundamentals",
+    "description": "The label for category 'Fundamentals' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Fundamentals.link.generated-index.description": {
+    "message": "Fundamental components of web development",
+    "description": "The generated-index page description for category 'Fundamentals' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Graphics": {
+    "message": "Graphics",
+    "description": "The label for category 'Graphics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Libraries": {
+    "message": "Libraries",
+    "description": "The label for category 'Libraries' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.D3.js": {
+    "message": "D3.js",
+    "description": "The label for category 'D3.js' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.THREE.js": {
+    "message": "THREE.js",
+    "description": "The label for category 'THREE.js' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.MathJax": {
+    "message": "MathJax",
+    "description": "The label for category 'MathJax' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Projects": {
+    "message": "Projects",
+    "description": "The label for category 'Projects' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.2D graphics": {
+    "message": "2D graphics",
+    "description": "The label for category '2D graphics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.3D graphics": {
+    "message": "3D graphics",
+    "description": "The label for category '3D graphics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.reactSidebar.category.React / TypeScript": {
+    "message": "React / TypeScript",
+    "description": "The label for category 'React / TypeScript' in sidebar 'reactSidebar'"
+  },
+  "sidebar.reactSidebar.category.Libraries": {
+    "message": "Libraries",
+    "description": "The label for category 'Libraries' in sidebar 'reactSidebar'"
+  },
+  "sidebar.reactSidebar.category.UI": {
+    "message": "UI",
+    "description": "The label for category 'UI' in sidebar 'reactSidebar'"
+  },
+  "sidebar.reactSidebar.category.Tools": {
+    "message": "Tools",
+    "description": "The label for category 'Tools' in sidebar 'reactSidebar'"
+  }
+}

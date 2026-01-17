@@ -1,0 +1,80 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	color-scheme: light dark;
+}
+
+body {
+	background: light-dark(#eee, #111);
+	font-family: sans-serif;
+	line-height: 1.5;
+}
+
+main {
+	/* colors */
+	background: light-dark(#fff, #222);
+	border: 1px solid #aaa;
+	border-width: 0 1px;
+
+	/* dimensions */
+	margin: 0 auto;
+	max-width: 800px;
+	padding: 0 2em;
+	overflow: auto;
+
+	/* display */
+	min-height: 100vh;
+}
+
+nav {
+	border-bottom: 1px solid light-dark(#aaa, #444);
+	padding: 0.5em 1em;
+	display: flex;
+}
+
+#color-switcher {
+	all: unset;
+	cursor: pointer;
+	display: inline-flex;
+	margin-left: auto;
+	padding: 6px;
+	border-radius: 100%;
+
+	img {
+		width: 24px;
+	}
+
+	/* icon toggling */
+	&[data-value="dark"] {
+		> .icon-light,
+		> .icon-system {
+			display: none;
+		}
+	}
+
+	&[data-value="light"] {
+		> .icon-dark,
+		> .icon-system {
+			display: none;
+		}
+	}
+
+	&[data-value="system"] {
+		> .icon-dark,
+		> .icon-light {
+			display: none;
+		}
+	}
+
+	/* animation */
+	opacity: 0.97;
+
+	&:hover {
+		background: #ddd;
+		opacity: 1;
+	}
+}

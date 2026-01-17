@@ -1,0 +1,93 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	color-scheme: light dark;
+}
+
+body {
+	background: light-dark(#eee, #111);
+	font-family: sans-serif;
+	line-height: 1.5;
+}
+
+main {
+	/* colors */
+	background: light-dark(#fff, #222);
+	border: 1px solid #aaa;
+	border-width: 0 1px;
+
+	/* dimensions */
+	margin: 0 auto;
+	max-width: 800px;
+	padding: 0 2em;
+	overflow: auto;
+
+	/* display */
+	min-height: 100vh;
+}
+
+#container {
+	display: flex;
+	gap: 2em;
+	margin: 1em auto;
+	align-items: start;
+	justify-content: space-around;
+}
+
+table {
+	border-collapse: collapse;
+	/* this can cause problems */
+	/* overflow: hidden; */
+
+	--radius: 4px;
+}
+
+/* table header */
+thead th {
+	background-color: light-dark(cornflowerblue, darkslateblue);
+	padding: 0.5em 1em;
+
+	&:first-child {
+		border-top-left-radius: var(--radius);
+	}
+
+	&:last-child {
+		border-top-right-radius: var(--radius);
+	}
+}
+
+/* row coloring and borders */
+tbody > tr {
+	&:nth-of-type(even) > * {
+		background-color: light-dark(#f3f3f3, #444);
+	}
+
+	&:nth-of-type(odd) > * {
+		background-color: light-dark(#e0e0e0, #555);
+	}
+
+	&:last-child {
+		> *:first-child {
+			border-bottom-left-radius: var(--radius);
+		}
+
+		> *:last-child {
+			border-bottom-right-radius: var(--radius);
+		}
+	}
+}
+
+tbody {
+	th,
+	td {
+		font-family: monospace;
+		font-weight: normal;
+		text-align: right;
+		padding: 2px 8px;
+	}
+}
+
+tbody > tr.decimal > * {
+	background-color: light-dark(pink, purple);
+}

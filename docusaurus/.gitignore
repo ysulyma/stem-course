@@ -1,5 +1,17 @@
 # Dependencies
-node_modules
+/node_modules
+
+# Production
+/build
+
+# Generated files
+.docusaurus
+.cache-loader
+
+# Firebase Hosting
+# /firebase.json
+*.cache
+hosting/.cache
 
 # Misc
 .DS_Store
