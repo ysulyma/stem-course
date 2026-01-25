@@ -1,7 +1,7 @@
 {
-  "label": "Libraries",
-  "position": 3,
-  "link": {
-    "type": "generated-index"
-  }
+	"label": "Libraries",
+	"link": {
+		"type": "generated-index"
+	},
+	"position": 3
 }

@@ -6,3 +6,5 @@
 - Context: how to do `throw new Error()`
 
 - `<pre>{JSON.stringify(obj, null, 2)}</pre>`
+
+- you can use `Ctrl-N` / `Ctrl-P` to navigate VScode menus without the arrow keys

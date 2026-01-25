@@ -1,26 +1,26 @@
 {
-	"title": {
-		"message": "JS × STEM",
-		"description": "The title in the navbar"
-	},
-	"logo.alt": {
-		"message": "My Site Logo",
-		"description": "The alt text of navbar logo"
+	"item.label.GitHub": {
+		"description": "Navbar item with label GitHub",
+		"message": "GitHub"
 	},
 	"item.label.🍦 Vanilla": {
-		"message": "🍦 Vanilla",
-		"description": "Navbar item with label 🍦 Vanilla"
-	},
-	"item.label.🪩 Framework": {
-		"message": "🪩 Framework",
-		"description": "Navbar item with label 🪩 Framework"
+		"description": "Navbar item with label 🍦 Vanilla",
+		"message": "🍦 Vanilla"
 	},
 	"item.label.🤯 Video": {
-		"message": "🤯 Vidéo",
-		"description": "Navbar item with label 🤯 Video"
+		"description": "Navbar item with label 🤯 Video",
+		"message": "🤯 Vidéo"
 	},
-	"item.label.GitHub": {
-		"message": "GitHub",
-		"description": "Navbar item with label GitHub"
+	"item.label.🪩 Framework": {
+		"description": "Navbar item with label 🪩 Framework",
+		"message": "🪩 Framework"
+	},
+	"logo.alt": {
+		"description": "The alt text of navbar logo",
+		"message": "My Site Logo"
+	},
+	"title": {
+		"description": "The title in the navbar",
+		"message": "JS × STEM"
 	}
 }
