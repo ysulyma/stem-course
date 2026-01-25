@@ -20,7 +20,7 @@ const config: Config = {
 	// may want to replace "en" with "zh-Hans".
 	i18n: {
 		defaultLocale: "en",
-		locales: ["en", "fr"],
+		locales: ["en"],
 	},
 
 	onBrokenLinks: "throw",
@@ -143,7 +143,7 @@ const config: Config = {
 						// 	to: "/blog",
 						// },
 						{
-							href: "https://github.com/facebook/docusaurus",
+							href: "https://github.com/ysulyma/stem-course",
 							label: "GitHub",
 						},
 					],

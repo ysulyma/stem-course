@@ -48,15 +48,17 @@ const Users: User[] = [
 	{
 		description: "See numbers written in different bases",
 		preview: require("./showcase/bases-table.png"),
-		source: "https://github.com/algolia/docsearch/tree/main/packages/website",
+		source:
+			"https://github.com/ysulyma/stem-course/tree/main/content/vanilla/1-fundamentals/3-js/bases",
 		tags: ["vanilla"],
 		title: "Number bases",
-		website: "/content/vanilla/1-fundamentals/3-js/bases.html",
+		website: "/content/vanilla/1-fundamentals/3-js/bases/",
 	},
 	{
 		description: "Hear the graph of a 3D function",
 		preview: require("./showcase/hear-graph.png"),
-		source: "https://github.com/algolia/docsearch/tree/main/packages/website",
+		source:
+			"https://github.com/ysulyma/stem-course/tree/main/content/framework/app/audio-graph-3d",
 		tags: ["3d", "audio", "react"],
 		title: "Graph audiation",
 		website: "/content/framework/audio-graph-3d.html",
