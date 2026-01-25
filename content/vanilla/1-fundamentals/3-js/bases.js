@@ -4,19 +4,19 @@
 
 	const container = document.getElementById("container");
 
-	const table = document.createElement("table");
+	const table = $e("table");
 
 	// table header
-	const thead = document.createElement("thead");
+	const thead = $e("thead");
 	{
-		const tr = document.createElement("tr");
+		const tr = $e("tr");
 		{
-			const th = document.createElement("th");
+			const th = $e("th");
 			th.appendChild(document.createTextNode("Base"));
 			tr.appendChild(th);
 		}
 		{
-			const th = document.createElement("th");
+			const th = $e("th");
 			th.appendChild(document.createTextNode("Value"));
 			tr.appendChild(th);
 		}
@@ -26,15 +26,15 @@
 	table.appendChild(thead);
 
 	// table body
-	const tbody = document.createElement("tbody");
+	const tbody = $e("tbody");
 	for (let base = 2; base < max; ++base) {
-		const tr = document.createElement("tr");
+		const tr = $e("tr");
 
-		const th = document.createElement("th");
+		const th = $e("th");
 		th.appendChild(document.createTextNode(base));
 		tr.appendChild(th);
 
-		const td = document.createElement("th");
+		const td = $e("th");
 		td.appendChild(document.createTextNode(value.toString(base)));
 		tr.appendChild(td);
 

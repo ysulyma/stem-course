@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"alwaysStrict": true,
+		"declaration": false,
+		"esModuleInterop": true,
+		"incremental": true,
+		"lib": ["es2022", "dom", "dom.iterable"],
+		"noImplicitAny": true,
+		"noImplicitOverride": false,
+		"noUncheckedIndexedAccess": false,
+		"pretty": true,
+		"removeComments": false,
+		"rewriteRelativeImportExtensions": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "es2022",
+		"verbatimModuleSyntax": true
+	}
+}

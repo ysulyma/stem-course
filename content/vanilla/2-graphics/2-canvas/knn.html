@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>k-nearest neighbors</title>
+    <link href="knn.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main>
+      <div id="controls">
+        <button
+          aria-checked
+          class="color-selection"
+          data-color="red"
+          role="radio"
+          style="background-color: red"
+          type="button"
+        />
+        <button
+          class="color-selection"
+          data-color="green"
+          role="radio"
+          style="background-color: green"
+          type="button"
+        />
+        <button
+          class="color-selection"
+          data-color="blue"
+          role="radio"
+          style="background-color: blue"
+          type="button"
+        />
+        <button id="clear" type="button">Clear</button>
+      </div>
+      <div class="canvas-container">
+        <canvas id="layer-dots"></canvas>
+        <canvas id="layer-drawing"></canvas>
+        <svg id="cursor" height="32" width="32" viewBox="-16 -16 32 32">
+          <circle fill="red" r="4" />
+        </svg>
+      </div>
+    </main>
+
+    <script src="knn.js"></script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+main {
+	height: 100vh;
+	width: 100vw;
+	padding: 8px;
+}
+
+/* controls */
+#controls {
+	align-items: center;
+	display: flex;
+	gap: 8px;
+	margin-bottom: 1em;
+}
+
+.color-selection {
+	background-color: attr("data-color");
+	border: 1px solid;
+	height: 24px;
+	width: 24px;
+	opacity: 30%;
+
+	&[aria-checked] {
+		opacity: 100%;
+	}
+}
+
+.canvas-container {
+	border: 1px solid gray;
+	height: 320px;
+	width: 100%;
+	position: relative;
+}
+
+canvas {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+#layer-dots {
+	opacity: 50%;
+	pointer-events: none;
+}
+
+#layer-cursor {
+	pointer-events: none;
+}
+
+#cursor {
+	position: absolute;
+	pointer-events: none;
+
+	translate: -50% -50%;
+}
