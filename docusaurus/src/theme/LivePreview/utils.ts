@@ -75,6 +75,13 @@ export function render({
 		scriptTag.textContent = script;
 	}
 
+	// insert client script
+	{
+		const script = document.createElement("script");
+		script.appendChild(document.createTextNode(clientScript));
+		doc.querySelector("head").appendChild(script);
+	}
+
 	return serializeDocument(doc);
 }
 
@@ -132,3 +139,15 @@ export function parseMetaString(meta: string): Record<string, string> {
 		),
 	);
 }
+
+const clientScript = `
+/* update CSS without reloading */
+window.addEventListener("message", ({data}) => {
+  switch (data.type) {
+    case "color-scheme":
+      document.body.style.colorScheme = data.colorScheme;
+      break;
+  }
+});
+
+`;

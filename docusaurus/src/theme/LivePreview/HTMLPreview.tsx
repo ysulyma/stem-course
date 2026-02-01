@@ -1,3 +1,4 @@
+import { useColorMode } from "@docusaurus/theme-common";
 import { useBoothStore } from "@lqv/codebooth";
 import { useCallback, useEffect, useRef } from "react";
 
@@ -8,7 +9,19 @@ import styles from "./LivePreview.module.css";
 export function HTMLPreview() {
 	const store = useBoothStore();
 
+	const { colorMode } = useColorMode();
+
 	const iframe = useRef<HTMLIFrameElement>(null);
+
+	useEffect(() => {
+		iframe.current?.contentWindow.postMessage(
+			{
+				colorScheme: colorMode,
+				type: "color-scheme",
+			},
+			"*",
+		);
+	}, [colorMode]);
 
 	const refresh = useCallback(() => {
 		const { groups, activeGroup } = store.getState();

@@ -31,12 +31,12 @@ There are a couple of different ways to add styling to a page. The first is with
       {modify(basesHtmlOnly, doc =>
         doc.line("<body>")
         .after(`
-        <style>
-          body {
-            font-family: sans-serif;
-          }
-        </style>
-`, 2)
+          <style>
+            body {
+              font-family: sans-serif;
+            }
+          </style>
+        `, 2)
       )}
     </MDXCode>
   </MDXPre>
@@ -125,7 +125,6 @@ Subtly alternating the background colors of table rows makes them significantly 
     font-family: sans-serif;
   }
 
-  /* I changed the HTML a bit */
   main {
     /* colors and borders */
     background: #fff;

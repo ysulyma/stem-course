@@ -12,14 +12,35 @@
 		]
 	},
 	"dependencies": {
+		"@babel/standalone": "^7.28.6",
+		"@codemirror/commands": "^6.10.1",
+		"@codemirror/lang-css": "^6.3.1",
+		"@codemirror/lang-html": "^6.4.11",
+		"@codemirror/lang-javascript": "^6.2.4",
+		"@codemirror/language": "^6.12.1",
+		"@codemirror/search": "^6.6.0",
+		"@codemirror/state": "^6.5.4",
+		"@codemirror/view": "^6.39.11",
 		"@docusaurus/core": "3.9.2",
 		"@docusaurus/plugin-ideal-image": "^3.9.2",
 		"@docusaurus/preset-classic": "3.9.2",
+		"@docusaurus/theme-live-codeblock": "^3.9.2",
+		"@lezer/highlight": "^1.2.3",
+		"@lqv/codebooth": "^0.5.1",
 		"@mdx-js/react": "^3.0.0",
+		"@phosphor-icons/react": "^2.1.10",
+		"@radix-ui/react-dropdown-menu": "^2.1.16",
+		"@replit/codemirror-vim": "^6.3.0",
+		"classnames": "^2.5.1",
 		"clsx": "^2.0.0",
+		"jszip": "^3.10.1",
+		"prettier": "^3.8.1",
 		"prism-react-renderer": "^2.3.0",
+		"radix-ui": "^1.4.3",
 		"react": "^19.0.0",
-		"react-dom": "^19.0.0"
+		"react-dom": "^19.0.0",
+		"usehooks-ts": "^3.1.1",
+		"zustand": "^5.0.10"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.11",
@@ -27,6 +48,7 @@
 		"@docusaurus/tsconfig": "3.9.2",
 		"@docusaurus/types": "3.9.2",
 		"baseline-browser-mapping": "^2.9.17",
+		"raw-loader": "^4.0.2",
 		"typescript": "~5.6.2"
 	},
 	"engines": {

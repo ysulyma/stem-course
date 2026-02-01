@@ -1,4 +1,4 @@
-.LivePreview {
+:global(body) {
   --prism-light-fg: #393a34;
   --prism-light-bg: #f6f8fa;
   --prism-dark-fg: #f8f8f2;
@@ -10,7 +10,9 @@
     hsl(from var(--prism-light-bg) h s calc(l - 10)),
     hsl(from var(--prism-dark-bg) h s calc(l + 4))
   );
+}
 
+.LivePreview {
   --split: 50%;
 
   border: 1px solid var(--prism-sep);
@@ -165,8 +167,39 @@
 .iframe {
   background-color: #fff;
   border: none;
-  border-bottom-right-radius: 5px;
   outline: none;
   height: 100%;
   width: var(--split);
+}
+
+.DropdownMenuContent {
+  background-color: hsl(from var(--prism-bg) h s calc(l - 6));
+  border-radius: 0 0 4px 4px;
+	animation-duration: 400ms;
+	animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+	will-change: transform, opacity;
+	animation-name: slideUpAndFade;
+}
+
+.DropdownMenuItem {
+  background-color: transparent;
+  cursor: pointer;
+  padding: 4px 16px;
+
+  &[data-highlighted] {
+    background-color: hsl(from var(--prism-bg) h s calc(l - 2));
+    outline: none;
+  }
+}
+
+
+@keyframes slideUpAndFade {
+	from {
+		opacity: 0;
+		transform: translateY(0px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }

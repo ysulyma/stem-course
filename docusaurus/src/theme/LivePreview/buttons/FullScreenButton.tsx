@@ -10,28 +10,28 @@ export function FullScreenButton({
 	elt: React.RefObject<HTMLElement>;
 }) {
 	const [isFullScreen, setFullScreen] = useState(
-		document.fullscreenElement !== null,
+		(globalThis.document?.fullscreenElement ?? null) !== null,
 	);
 
 	useEventListener(
 		"fullscreenchange",
 		() => {
-			setFullScreen(!!document.fullscreenElement);
+			setFullScreen(!!globalThis.document?.fullscreenElement);
 		},
-		useRef(document),
+		useRef(globalThis.document),
 	);
 
 	return (
 		<button
 			className={styles.button}
 			onClick={() => {
-				if (document.fullscreenElement) {
+				if (globalThis.document?.fullscreenElement) {
 					document.exitFullscreen();
 				} else {
 					elt.current?.requestFullscreen();
 				}
 			}}
-			title={isFullScreen ? "Full screen" : "Exit full screen"}
+			title={isFullScreen ? "Exit full screen" : "Full screen"}
 			type="button"
 		>
 			{isFullScreen ? <CornersInIcon /> : <CornersOutIcon />}

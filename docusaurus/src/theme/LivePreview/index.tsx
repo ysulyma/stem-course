@@ -16,6 +16,7 @@ import {
 
 import { CopyButton } from "./buttons/CopyButton";
 import { DownloadButton } from "./buttons/DownloadButton";
+import { FormatButton } from "./buttons/FormatButton";
 import { FullScreenButton } from "./buttons/FullScreenButton";
 import { RunButton } from "./buttons/RunButton";
 import { IntegratedEditor } from "./ColorSchemeAwareEditor";
@@ -109,10 +110,11 @@ export function LivePreview({
 						value={{ color: "currentColor", size: "24px", weight: "bold" }}
 					>
 						<div className={styles.controlGroup}>
-							<RunButton />
-							<CopyButton />
+							<RunButton shortcut="Mod-Enter" />
+							<FormatButton shortcut="Mod-;" />
 						</div>
 						<div className={styles.controlGroup}>
+							<CopyButton />
 							<DownloadButton />
 							<FullScreenButton elt={root} />
 						</div>

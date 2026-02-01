@@ -27,9 +27,19 @@ const config: Config = {
 
 	// GitHub pages deployment config.
 	// If you aren't using GitHub pages, you don't need these.
-	organizationName: "facebook", // Usually your GitHub org/user name.
+	// organizationName: "facebook", // Usually your GitHub org/user name.
 
 	plugins: [
+		() => ({
+			configureWebpack() {
+				return {
+					module: {
+						rules: [{ test: /\.html$/, use: "raw-loader" }],
+					},
+				};
+			},
+			name: "loadHTML",
+		}),
 		[
 			"@docusaurus/plugin-ideal-image",
 			{
@@ -175,12 +185,12 @@ const config: Config = {
 				// 	type: "docSidebar",
 				// },
 				{ label: "🖼 Showcase", position: "right", to: "showcase" },
+				// {
+				// 	position: "right",
+				// 	type: "localeDropdown",
+				// },
 				{
-					position: "right",
-					type: "localeDropdown",
-				},
-				{
-					href: "https://github.com/facebook/docusaurus",
+					href: "https://github.com/ysulyma/stem-course",
 					label: "GitHub",
 					position: "right",
 				},
@@ -192,14 +202,17 @@ const config: Config = {
 			title: "JS × STEM",
 		},
 		prism: {
+			additionalLanguages: ["css"],
 			darkTheme: prismThemes.dracula,
 			theme: prismThemes.github,
 		},
 	} satisfies Preset.ThemeConfig,
+
+	themes: ["@docusaurus/theme-live-codeblock"],
 	title: "JavaScript for STEM",
 
 	// Set the production url of your site here
-	url: "https://your-docusaurus-site.example.com",
+	url: "https://stem-course.liqvidjs.org",
 };
 
 export default config;

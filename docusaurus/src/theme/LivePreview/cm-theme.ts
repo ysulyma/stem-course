@@ -48,6 +48,9 @@ function editorThemeFromPrism(theme: PrismTheme, dark = false): Extension {
 function cssFromPrismTheme(theme: PrismTheme) {
 	return syntaxHighlighting(
 		HighlightStyle.define([
+			{ tag: tags.comment, ...findStyle(theme.styles, "comment") },
+			{ tag: tags.keyword, ...findStyle(theme.styles, "function") },
+			{ color: "orange", tag: tags.atom },
 			{ tag: tags.meta, ...findStyle(theme.styles, "doctype") },
 			{ tag: tags.operator, ...findStyle(theme.styles, "selector") },
 			{ tag: tags.propertyName, ...findStyle(theme.styles, "property") },
