@@ -2,29 +2,28 @@
 sidebar_position: 2
 ---
 
-import {LivePreview} from "@site/src/theme/LivePreview"
-import {modify} from "@site/src/theme/LivePreview/modify"
-import MDXPre from "@theme/MDXComponents/Pre";
 import MDXCode from "@theme/MDXComponents/Code";
+import MDXPre from "@theme/MDXComponents/Pre";
+import {LivePreview} from "@site/src/theme/LivePreview"
+import {MDN, CSSProp, CSSSelector} from "@site/src/theme/MDN"
+import {modify} from "@site/src/theme/LivePreview/modify"
 
 import basesHtmlOnly from "./_assets/bases-html-only.html";
+export const basesHtmlWithLink = modify(basesHtmlOnly, doc => doc.line("<title>").after(`<link href="./bases.css" rel="stylesheet" />`));
+export const basesHtmlWithMain = modify(basesHtmlWithLink, doc => doc.range("<body>", "</body>").inner().wrap("<main>", "</main>"));
 
 # CSS
 
-So far our page is very plain. <abbr title="Cascading Style Sheets">CSS</abbr> allows us to add styling.
+So far our page is very plain. <abbr title="Cascading Style Sheets">CSS</abbr> allows us to add styling. We will continue trying to reproduce the <a href="/content/vanilla/1-fundamentals/3-js/bases/" target="_blank">number bases</a> example.
 
 Helpful links from MDN:
 - [CSS styling basics](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics)
 - [CSS text styling](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Text_styling)
 - [CSS layout](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout)
 
-## Bases table example
+## Adding a stylesheet
 
-Recall that our first goal in the course is to reproduce the <a href="/content/vanilla/1-fundamentals/3-js/bases/" target="_blank">number bases</a> example.
-
-### Adding a stylesheet
-
-There are a couple of different ways to add styling to a page. The first is with a [`<style>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/style) tag.
+There are a couple of different ways to add styling to a page. The first is with a <MDN tag="style"/> tag.
 
 <LivePreview>
   <MDXPre>
@@ -43,17 +42,310 @@ There are a couple of different ways to add styling to a page. The first is with
   </MDXPre>
 </LivePreview>
 
-### Background
+However, it is better to split our CSS into a separate file and include it with the <MDN tag="link" /> tag.
 
 <LivePreview>
+  <MDXPre>
+    <MDXCode className="language-html" metastring={`title="index.html"`}>
+      {basesHtmlWithLink}
+    </MDXCode>
+  </MDXPre>
   ```css title="bases.css"
   body {
     font-family: sans-serif;
   }
   ```
+</LivePreview>
+
+## Background
+
+<LivePreview>
+
+  ```css title="bases.css"
+  /* reset styles */
+  * {
+    box-sizing: border-box;
+    margin: 0;  
+    padding: 0;
+  }
+
+  body {
+    background: #eee;
+    font-family: sans-serif;
+  }
+
+  /* I added a <main> tag around our content—check index.html */
+  main {
+    /* colors and borders */
+    background: #fff;
+    border: 1px solid #aaa;
+    border-width: 0 1px;
+
+    /* this centers it */
+    margin: 0 auto;
+
+    /* dimensions */
+    max-width: 75%;
+    min-height: 100vh;
+
+    padding: 1em 2em;
+  }
+
+  /* add margins back to paragraphs */
+  p {
+    margin: 1em 0;
+  }
+```
+
   <MDXPre>
     <MDXCode className="language-html" metastring={`title="index.html"`}>
-      {modify(basesHtmlOnly)}
+      {basesHtmlWithMain}
     </MDXCode>
   </MDXPre>
 </LivePreview>
+
+## Table styling
+
+### Zebra effect
+
+Subtly alternating the background colors of table rows makes them significantly easier to read. We can achieve this with the <CSSSelector selector=":nth-of-type" /> pseudo-class.
+
+<LivePreview>
+
+  ```css title="bases.css"
+  /* reset styles */
+  * {
+    box-sizing: border-box;
+    margin: 0;  
+    padding: 0;
+  }
+
+  body {
+    background: #eee;
+    font-family: sans-serif;
+  }
+
+  /* I changed the HTML a bit */
+  main {
+    /* colors and borders */
+    background: #fff;
+    border: 1px solid #aaa;
+    border-width: 0 1px;
+
+    /* this centers it */
+    margin: 0 auto;
+
+    /* dimensions */
+    max-width: 75%;
+    min-height: 100vh;
+
+    padding: 1em 2em;
+  }
+
+  /* add margins back to paragraphs */
+  p {
+    margin: 1em 0;
+  }
+
+  /* table styling */
+  table {
+    /* try commenting this out to see what goes wrong without it */
+    border-collapse: collapse;
+
+    tbody > tr:nth-child(even) {
+      background-color: #f3f3f3;
+    }
+
+    tbody > tr:nth-child(odd) {
+      background-color: #e0e0e0;
+    }
+    
+    /* table header cells */
+    > thead th {
+      background-color: cornflowerblue;
+      padding: 4px 8px;
+      text-align: right;
+    }
+
+    td {
+      font-family: monospace;
+      padding: 2px 8px;
+      text-align: right;
+    }
+  }
+```
+
+  <MDXPre>
+    <MDXCode className="language-html" metastring={`title="index.html"`}>
+      {basesHtmlWithMain}
+    </MDXCode>
+  </MDXPre>
+</LivePreview>
+
+### Rounded corners
+
+The easiest way to get rounded corners is to set <CSSProp property="border-radius"/> on the `<table>` and then add <CSSProp property="overflow" value="hidden"/> to clip the edges.
+
+<LivePreview>
+
+  ```css title="bases.css"
+  /* reset styles */
+  * {
+    box-sizing: border-box;
+    margin: 0;  
+    padding: 0;
+  }
+
+  body {
+    background: #eee;
+    font-family: sans-serif;
+  }
+
+  main {
+    /* colors and borders */
+    background: #fff;
+    border: 1px solid #aaa;
+    border-width: 0 1px;
+
+    /* this centers it */
+    margin: 0 auto;
+
+    /* dimensions */
+    max-width: 75%;
+    min-height: 100vh;
+
+    padding: 1em 2em;
+  }
+
+  /* add margins back to paragraphs */
+  p {
+    margin: 1em 0;
+  }
+
+  /* table styling */
+  table {
+    /* set a border radius + clip the corners of the table */
+    border-radius: 4px;
+    overflow: hidden;
+
+    border-collapse: collapse;
+
+    tbody > tr:nth-child(even) {
+      background-color: #f3f3f3;
+    }
+
+    tbody > tr:nth-child(odd) {
+      background-color: #e0e0e0;
+    }
+    
+    /* table header cells */
+    > thead th {
+      background-color: cornflowerblue;
+      padding: 4px 8px;
+      text-align: right;
+    }
+
+    td {
+      font-family: monospace;
+      padding: 2px 8px;
+      text-align: right;
+    }
+  }
+```
+
+  <MDXPre>
+    <MDXCode className="language-html" metastring={`title="index.html"`}>
+      {basesHtmlWithMain}
+    </MDXCode>
+  </MDXPre>
+</LivePreview>
+
+## Dark mode
+
+Use the [`light-dark`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/color_value/light-dark) function to specify two variants for light vs dark mode.
+
+You must also add <CSSProp property="color-scheme" value="light dark" /> on <CSSSelector selector=":root"/> to opt-in to both light and dark mode. This is a bit weird-looking; if you just added `color-scheme: dark`, that would _force_ everything into dark mode. You would do this if you want your site to have its own color scheme toggler (like there is on this site) instead of going with the user's system preference.
+
+<LivePreview>
+
+  ```css title="bases.css"
+  /* reset styles */
+  * {
+    box-sizing: border-box;
+    margin: 0;  
+    padding: 0;
+  }
+  
+  /* opt in to light/dark depending on user preference */
+  :root {
+    color-scheme: light dark;
+  }
+
+  body {
+    background: light-dark(#eee, #111);
+    color: light-dark(black, white);
+    font-family: sans-serif;
+  }
+
+  main {
+    /* colors and borders */
+    background: light-dark(#fff, #333);
+    border: 1px solid #aaa;
+    border-width: 0 1px;
+
+    /* this centers it */
+    margin: 0 auto;
+
+    /* dimensions */
+    max-width: 75%;
+    min-height: 100vh;
+
+    padding: 1em 2em;
+  }
+
+  /* add margins back to paragraphs */
+  p {
+    margin: 1em 0;
+  }
+
+  /* table styling */
+  table {
+    /* set a border radius + clip the corners of the table */
+    border-radius: 4px;
+    overflow: hidden;
+
+    border-collapse: collapse;
+
+    tbody > tr:nth-child(even) {
+      background-color: light-dark(#f3f3f3, #444);
+    }
+
+    tbody > tr:nth-child(odd) {
+      background-color: light-dark(#e0e0e0, #555);
+    }
+    
+    /* table header cells */
+    > thead th {
+      background-color: light-dark(cornflowerblue, darkslateblue);
+      padding: 4px 8px;
+      text-align: right;
+    }
+
+    td {
+      font-family: monospace;
+      padding: 2px 8px;
+      text-align: right;
+    }
+  }
+```
+
+  <MDXPre>
+    <MDXCode className="language-html" metastring={`title="index.html"`}>
+      {basesHtmlWithMain}
+    </MDXCode>
+  </MDXPre>
+</LivePreview>
+
+:::warning
+The above code is to sync the color scheme **to the user's system preference.** In the interactive examples, I am doing some magic so that it instead syncs **to the color scheme of this documentation site**.
+:::
