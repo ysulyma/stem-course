@@ -13,7 +13,7 @@ export function HTMLPreview() {
 
 	const iframe = useRef<HTMLIFrameElement>(null);
 
-	useEffect(() => {
+	const setColorMode = useCallback(() => {
 		iframe.current?.contentWindow.postMessage(
 			{
 				colorScheme: colorMode,
@@ -22,6 +22,18 @@ export function HTMLPreview() {
 			"*",
 		);
 	}, [colorMode]);
+
+	useEffect(() => {
+		setColorMode();
+	}, [setColorMode]);
+
+	useEffect(() => {
+		iframe.current?.addEventListener("load", setColorMode);
+
+		return () => {
+			iframe.current?.removeEventListener("load", setColorMode);
+		};
+	});
 
 	const refresh = useCallback(() => {
 		const { groups, activeGroup } = store.getState();
