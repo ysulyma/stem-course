@@ -1,0 +1,59 @@
+---
+sidebar_position: 2
+---
+
+import {LivePreview} from "@site/src/theme/LivePreview"
+import {modify} from "@site/src/theme/LivePreview/modify"
+import MDXPre from "@theme/MDXComponents/Pre";
+import MDXCode from "@theme/MDXComponents/Code";
+
+import basesHtmlOnly from "./_assets/bases-html-only.html";
+
+# CSS
+
+So far our page is very plain. <abbr title="Cascading Style Sheets">CSS</abbr> allows us to add styling.
+
+Helpful links from MDN:
+- [CSS styling basics](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics)
+- [CSS text styling](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Text_styling)
+- [CSS layout](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout)
+
+## Bases table example
+
+Recall that our first goal in the course is to reproduce the <a href="/content/vanilla/1-fundamentals/3-js/bases/" target="_blank">number bases</a> example.
+
+### Adding a stylesheet
+
+There are a couple of different ways to add styling to a page. The first is with a [`<style>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/style) tag.
+
+<LivePreview>
+  <MDXPre>
+    <MDXCode className="language-html" metastring={`title="index.html"`}>
+      {modify(basesHtmlOnly, doc =>
+        doc.line("<body>")
+        .after(`
+        <style>
+          body {
+            font-family: sans-serif;
+          }
+        </style>
+`, 2)
+      )}
+    </MDXCode>
+  </MDXPre>
+</LivePreview>
+
+### Background
+
+<LivePreview>
+  ```css title="bases.css"
+  body {
+    font-family: sans-serif;
+  }
+  ```
+  <MDXPre>
+    <MDXCode className="language-html" metastring={`title="index.html"`}>
+      {modify(basesHtmlOnly)}
+    </MDXCode>
+  </MDXPre>
+</LivePreview>

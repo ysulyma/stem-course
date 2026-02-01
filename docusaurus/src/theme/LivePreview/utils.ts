@@ -124,3 +124,11 @@ export function getFileType(filename: string): SupportedLanguage {
 //
 // 	return str;
 // }
+
+export function parseMetaString(meta: string): Record<string, string> {
+	return Object.fromEntries(
+		Array.from(meta.matchAll(/\b([a-z]+)="([^"]+?)"/g)).map(($_) =>
+			$_.slice(1),
+		),
+	);
+}

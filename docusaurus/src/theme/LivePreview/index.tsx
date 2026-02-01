@@ -2,8 +2,8 @@ import { css } from "@codemirror/lang-css";
 import { html } from "@codemirror/lang-html";
 import { javascript } from "@codemirror/lang-javascript";
 import type { Extension } from "@codemirror/state";
-import { CodeBooth, EditorPanel, Resize, Run } from "@lqv/codebooth";
-import { ArrowClockwiseIcon, IconContext } from "@phosphor-icons/react";
+import { CodeBooth, EditorPanel, Resize } from "@lqv/codebooth";
+import { IconContext } from "@phosphor-icons/react";
 import MDXCode from "@theme/MDXComponents/Code";
 import MDXPre from "@theme/MDXComponents/Pre";
 import {
@@ -14,6 +14,10 @@ import {
 	useRef,
 } from "react";
 
+import { CopyButton } from "./buttons/CopyButton";
+import { DownloadButton } from "./buttons/DownloadButton";
+import { FullScreenButton } from "./buttons/FullScreenButton";
+import { RunButton } from "./buttons/RunButton";
 import { IntegratedEditor } from "./ColorSchemeAwareEditor";
 import { basicSetup } from "./cm-setup";
 import {
@@ -21,10 +25,9 @@ import {
 	editorThemeDark,
 	highlightingExtension,
 } from "./cm-theme";
-import { DownloadButton } from "./DownloadButton";
-import { FullScreenButton } from "./FullScreenButton";
 import { HTMLPreview } from "./HTMLPreview";
 import { FileTabs } from "./livecode/FileTabs";
+import { parseMetaString } from "./utils";
 
 import styles from "./LivePreview.module.css";
 
@@ -59,28 +62,34 @@ function isReactElement<P>(
 	return isValidElement(obj) && obj.type === component;
 }
 
-export function LivePreview({ children }: { children?: React.ReactNode }) {
+export function LivePreview({
+	children,
+	height,
+}: {
+	children?: React.ReactNode;
+	height?: number;
+}) {
 	const files = useMemo((): LivePreviewFile[] => {
-		if (!Array.isArray(children)) return [];
+		if (isReactElement(children, MDXPre)) children = [children];
 
 		return Array.from(children).reduce((acc, child) => {
 			if (!isReactElement(child, MDXPre)) return acc;
 			const code = child.props.children;
 			if (!isReactElement(code, MDXCode)) return acc;
 
-			const language = code.props.className?.match(/language-([^\s]+)/)?.[1];
+			const language = code.props.className?.match(/language-([^\s]+)/)?.[1] as
+				| SupportedLanguage
+				| undefined;
 			if (!language) return acc;
 
 			// biome-ignore lint/suspicious/noExplicitAny: types are not completely specified
-			const filename = (code.props as any).metastring?.match(
-				/title="([^"]+)"/,
-			)?.[1];
-			if (!filename) return acc;
+			const attrs = parseMetaString((code.props as any).metastring ?? "");
+			if (!attrs.title) return acc;
 
 			const content = code.props.children;
 			if (typeof content !== "string") return acc;
 
-			acc.push({ content, filename, language });
+			acc.push({ content, filename: attrs.title, language });
 			return acc;
 		}, [] as LivePreviewFile[]);
 	}, [children]);
@@ -88,21 +97,20 @@ export function LivePreview({ children }: { children?: React.ReactNode }) {
 	const root = useRef<HTMLElement>(null);
 
 	return (
-		<CodeBooth className={styles.LivePreview} ref={root}>
+		<CodeBooth
+			className={styles.LivePreview}
+			ref={root}
+			style={height ? { height: `${height}px` } : {}}
+		>
 			<div className={styles.header}>
 				<FileTabs classNames={{ tab: styles.TabsTrigger }} />
 				<div className={styles.controls}>
 					<IconContext.Provider
-						value={{ color: "currentColor", size: 24, weight: "bold" }}
+						value={{ color: "currentColor", size: "24px", weight: "bold" }}
 					>
 						<div className={styles.controlGroup}>
-							<Run
-								className={styles.button}
-								shortcut="Mod-Enter"
-								title="Refresh (⌘↩)"
-							>
-								<ArrowClockwiseIcon />
-							</Run>
+							<RunButton />
+							<CopyButton />
 						</div>
 						<div className={styles.controlGroup}>
 							<DownloadButton />

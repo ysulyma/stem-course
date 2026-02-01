@@ -3,9 +3,9 @@ import { DownloadSimpleIcon } from "@phosphor-icons/react";
 import { useCallback } from "react";
 import { useStore } from "zustand/react";
 
-import { getFileType, getMimeType, viewContents } from "./utils";
+import { getFileType, getMimeType, viewContents } from "../utils";
 
-import styles from "./LivePreview.module.css";
+import styles from "../LivePreview.module.css";
 
 export function DownloadButton() {
 	const getActiveFile = useStore(

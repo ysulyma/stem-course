@@ -9,7 +9,7 @@ The examples will be taken from undergraduate math and data science courses, sin
 - **JavaScript is interactive.** This is the decisive reason for choosing JavaScript. Although other languages can produce static graphics or animation, no other language can come close to the level of _interactivity_ that is possible with JavaScript (except by exporting to JavaScript, or by asking the user to install additional software).  
   Even if you primarily program in other languages, JavaScript will be useful for you to share your work. If you are teaching a Python course, you can use JavaScript to make your code samples runnable in a browser; if you are doing some hardcore computation in C++, you can have a JavaScript frontend that connects to your C++ backend in order to visualize them in a browser.
 
-- **JavaScript is ubiquitous.** Anyone with access to a computer or smartphone can access your content without needing to install additional software. (They also need an internet connection, but it's fairly easy to make JavaScript code work offline if your target audience requires it.)  
+- **JavaScript is ubiquitous.** Anyone with access to a computer or smartphone can access your content without needing to install additional software. <small>(They also need an internet connection, but it's fairly easy to make JavaScript code work offline if your target audience requires it.)</small>  
   This has a few sub-benefits:
   - Lots of JS code is available "off the shelf". This allows you to focus on creating _content_ instead of (re)inventing your own framework.
 
@@ -48,13 +48,19 @@ Then we will cover various techniques specific to STEM visualization:
 
 Many STEM practioners are already somewhat familiar with JavaScript, but find the modern landscape of web development bewildering. The second section of the course is intended to bridge this gap. Modern web development is largely driven by the needs of social networks and e-commerce sites, which is very different from the kind of web development we are doing here. Some of these advances make our lives significantly easier, but a lot of them are irrelevant.
 
-[React](https://react.dev) and [TypeScript](https://www.typescriptlang.org)
+We will cover:
+
+- [TypeScript](https://www.typescriptlang.org), a superset of JavaScript that adds type safety. Virtually all modern JS code is written in TypeScript instead of plain JavaScript.
+
+- [React](https://react.dev), a framework developed by Meta for making reactive user interfaces, which is very widely used (though not quite as ubiquitous as TypeScript).
 
 - additional libraries that make it easy to quickly build beautiful and accessible interfaces
 
 ### Interactive videos
 
-Finally, we will learn to make interactive videos with [Liqvid](https://liqvidjs.org).
+Finally, we will learn to make interactive videos with [Liqvid](https://liqvidjs.org). Really the goal of this course is to equip you to make videos with Liqvid; knowledge of web development, and React in particular, are the prerequisites for doing so.
+
+The closest comparisons to Liqvid are [Manim](https://www.manim.community) and [Remotion](https://www.remotion.dev). Manim is Python-based, so it can only make static videos, whereas Liqvid videos are interactive. Remotion _can_ make interactive videos, but they are mostly intended as previews of static videos, so that functionality is not very fleshed out. Conversely, Liqvid _can_ create static videos that you can post on YouTube/Twitter/etc. for discoverability, but the interactive experience is the main one.
 
 ### Not included
 

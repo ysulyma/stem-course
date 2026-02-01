@@ -1,0 +1,328 @@
+---
+sidebar_position: 1
+---
+
+import {LivePreview} from "@site/src/theme/LivePreview"
+export const MDN = ({tag}) => (
+  <a href={`https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/${tag}`} rel="noopener noreferrer" target="_blank">
+    <code>{`<${tag}>`}</code>
+  </a>
+);
+
+# HTML
+
+<abbr title="HyperText Markup Language">HTML</abbr> is what we use to "mark up" a document.
+
+Some useful links:
+
+- [MDN HTML tutorial](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content)
+- [list of all HTML elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements)
+
+## A basic webpage
+
+Save this file as `index.html` and open it in your browser.
+
+<LivePreview>
+```html title="index.html"
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My amazing webpage</title>
+  </head>
+  <body>
+    <h1>Hello world!</h1>
+  </body>
+</html>
+```
+</LivePreview>
+
+Let's break down what's going on here.
+
+- the `<!DOCTYPE html>` string tells the browser that this is a modern HTML document. If you omit this, your page should _mostly_ work, but unexpected things may happen since the browser will think it's dealing with a page from the 1990s/early 2000s.
+- the <MDN tag="html" /> tag goes around the entire document.
+- the <MDN tag="head" /> tag contains metadata about your document. The 
+- the <MDN tag="body" /> tag is where all the user-visible content goes.
+
+
+## Basic elements
+
+Here is an interactive example showcasing all of the basic text tags.
+
+<LivePreview height={800}>
+```html title="index.html"
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My amazing webpage</title>
+  </head>
+  <body>
+    <h1>Basic elements</h1>
+
+    <h2>Headings</h2>
+    <p>
+      Heading tags, <code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code>, are used to label the hierarchy of your page.
+      This helps screen readers and search engines.
+      There should only be one <code>&lt;h1&gt;</code> tag per page.
+    </p>
+
+    <h2>HTML entities</h2>
+    <p>What's up with the ampersands? In HTML, angle brackets (&lt; and &gt;) are special characters, so in order to display them you need to "escape" them with ampersands.</p>
+
+    <h2>Generic elements</h2>
+    <p>
+      Use <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> when you need to have a tag
+      (usually to attach styling, c.f. the next section), and no "more meaningful" tag is available.
+    </p>
+    <div>
+      here is a div <span>and a span</span> and then some more text
+    </div>
+    <div>
+      div's are "block elements" (they create line breaks), whereas <span>spans</span> are "inline elements".
+    </div>
+    <div style="background-color: lightgreen;">
+      here I am using a div to attach styling to an element (covered in the next section). I can <span style="color: red;font-style:italic;">do the same with a span</span>
+    </div>
+
+    <h2>Formatting</h2>
+    <h3>Bold/Italic</h3>
+    <p>Use <code>&lt;em&gt;</code> for <em>emphasis</em> and <code>&lt;strong&gt;</code> for <strong>strong emphasis</strong>.</p>
+
+    <h2>Lists</h2>
+    <p>Use <code>&lt;ul&gt;</code> for <strong>unordered lists:</strong>
+    <ul>
+      <li>eggs</li>
+      <li>milk</li>
+      <li>flour</li>
+    </ul>
+
+    <p>Use <code>&lt;ol&gt;</code> for <strong>ordered lists:</strong>
+    <ol>
+      <li>mix the eggs with the flour</li>
+      <li>gradually add milk</li>
+      <li>make pancakes</li>
+    </ol>
+
+    <p>Both use <code>&lt;li&gt;</code> for <strong>list items.</strong>
+
+    <p>There are also <strong>definition lists</strong>, but these are uncommon:</p>
+    <dl>
+      <dt>HTML</dt>
+      <dd>HyperText Markup Language: used to <em>describe</em> content on the web</dd>
+
+      <dt>CSS</dt>
+      <dd>Cascading Style Sheets: used to <em>style</em> content</dd>
+
+      <dt>JS</dt>
+      <dd>JavaScript: used to add <em>interactivity</em> to content</dd>
+    </dl>
+  </body>
+</html>
+```
+</LivePreview>
+
+## Tables
+
+Here is an interactive example showing how to make tables.
+
+<LivePreview>
+```html title="index.html"
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tables example</title>
+  </head>
+  <body>
+    <table>
+      <caption>Book sales</caption>
+      <thead>
+        <tr>
+          <th scope="col">Index</th>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>The Epiplectic Bicycle</td>
+          <td>Edward Gorey</td>
+          <td>$10</td>
+          <td>5</td>
+          <td>$50</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Breakfast of Champions</td>
+          <td>Kurt Vonnegut</td>
+          <td>$12</td>
+          <td>4</td>
+          <td>$48</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Cat's Cradle</td>
+          <td>Kurt Vonnegut</td>
+          <td>$15</td>
+          <td>2</td>
+          <td>$30</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="4"scope="totals" style="text-align: left;">Totals</th>
+          <td>11</td>
+          <td>$128</td>
+        </tr>
+      </tfoot>
+    </table>
+  </body>
+</html>
+```
+</LivePreview>
+
+Relevant tags:
+- <MDN tag="table" /> goes around the whole table
+- <MDN tag="thead" />, <MDN tag="tbody" />, and <MDN tag="tfoot" /> delinate the table header, body, and footer. You do not need to include a header/footer.
+- <MDN tag="tr" /> is used to create table rows
+- within a row, use <MDN tag="th" /> for header cells and <MDN tag="td" /> for regular cells (td = table data)
+- you can also use <MDN tag="caption" /> to add a caption to the whole table
+
+<!-- ## Forms -->
+<!---->
+<!-- [`<button>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button) -->
+<!-- [`<datalist>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/datalist) -->
+<!-- [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/fieldset) -->
+<!-- [`<form>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form) -->
+<!-- [`<input>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input) -->
+<!-- [`<label>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label) -->
+<!-- [`<legend>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/legend) -->
+<!-- [`<meter>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meter) -->
+<!-- [`<optgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/optgroup) -->
+<!-- [`<option>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/option) -->
+<!-- [`<output>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/output) -->
+<!-- [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/progress) -->
+<!-- [`<select>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select) -->
+<!-- [`<textarea>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/textarea) -->
+<!---->
+<!-- ## Head -->
+<!---->
+<!-- [`<link>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link) -->
+<!-- [`<head>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/head) -->
+<!-- [`<style>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/style) -->
+<!-- [`<title>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/title) -->
+<!---->
+<!-- ### Sharing on social networks -->
+<!---->
+<!-- [`<meta>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta) -->
+<!-- https://ogp.me -->
+<!---->
+<!-- ## Semantics -->
+<!---->
+<!-- ### Sectioning -->
+<!---->
+<!-- [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/hgroup) -->
+<!-- [`<section>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/section) -->
+<!-- [`<search>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/search) -->
+<!-- [`<address>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/address) -->
+<!-- [`<article>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/article) -->
+<!-- [`<aside>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/aside) -->
+<!-- [`<footer>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/footer) -->
+<!-- [`<header>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/header) -->
+<!---->
+<!-- ### Text -->
+<!---->
+<!-- [`<abbr>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/abbr) -->
+<!-- [`<acronym>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/acronym) -->
+<!-- [`<blockquote>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/blockquote) -->
+<!-- [`<cite>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/cite) -->
+<!-- [`<dd>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dd) -->
+<!-- [`<del>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/del) -->
+<!-- [`<dfn>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dfn) -->
+<!-- [`<dl>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dl) -->
+<!-- [`<dt>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dt) -->
+<!-- [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/figcaption) -->
+<!-- [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/figure) -->
+<!-- [`<ins>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/ins) -->
+<!-- [`<kbd>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/kbd) -->
+<!-- [`<main>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/main) -->
+<!-- [`<nav>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/nav) -->
+<!-- [`<q>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/q) -->
+<!-- [`<s>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/s) -->
+<!-- [`<samp>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/samp) -->
+<!-- [`<time>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/time) -->
+<!-- [`<var>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/var) -->
+
+<!--
+## Multimedia
+
+[`<canvas>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/canvas)
+[`<object>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/object)
+
+[`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/picture)
+[`<source>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/source)
+[`<iframe>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe)
+[`<param>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/param)
+[`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/audio)
+[`<track>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/track)
+[`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video)
+
+## Hilarious relics
+
+[`<small>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/small)
+[`<sub>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/sub)
+[`<sup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/sup)
+[`<b>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/b)
+[`<i>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/i)
+[`<u>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/u)
+[`<font>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/font)
+[`<marquee>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/marquee)
+[`<plaintext>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/plaintext)
+[`<big>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/big)
+
+## Ignore completely
+
+[`<area>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/area)
+[`<base>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/base)
+[`<bdi>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/bdi)
+[`<bdo>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/bdo)
+[`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/menu)
+[`<xmp>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/xmp)
+[`<rp>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/rp)
+[`<rt>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/rt)
+[`<rtc>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/rtc)
+[`<ruby>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/ruby)
+[`<nobr>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/nobr)
+[`<noembed>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/noembed)
+[`<noframes>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/noframes)
+[`<rb>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/rb)
+
+[`<frame>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/frame)
+[`<frameset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/frameset)
+[`<wbr>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/wbr)
+[`<map>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/map)
+[`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details)
+[`<data>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/data)
+[`<strike>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/strike)
+[`<embed>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/embed)
+[`<tt>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/tt)
+[`<center>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/center)
+
+## New and fancy
+
+[`<fencedframe>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/fencedframe)
+[`<selectedcontent>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/selectedcontent)
+[`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog)
+[`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/summary)
+[`<slot>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/slot)
+[`<template>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/template)
+
+-->

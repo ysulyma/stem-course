@@ -37,6 +37,8 @@
   gap: 2em;
   margin-left: auto;
   margin-right: 0.5em;
+
+  --button-size: 28px;
 }
 
 .controlGroup {
@@ -53,9 +55,19 @@
   transition-timing-function: ease-in-out;
   transition-duration: 100ms;
 
-  color: #444;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  line-height: 0;
+
+  color: #666;
+  width: var(--button-size);
 
   &:hover {
+    color: light-dark(#333, #ccc);
+  }
+
+  &:active {
     color: light-dark(#000, #fff);
   }
 }

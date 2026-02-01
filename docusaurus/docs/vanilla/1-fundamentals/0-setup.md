@@ -34,4 +34,4 @@ I will do some examples in VSCode in order to show you its features, but I perso
 
 - [ImageMagick](https://imagemagick.org/script/download.php#gsc.tab=0) for (advanced) image manipulation
 
-## Hosting
+<!-- ## Hosting -->

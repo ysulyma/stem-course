@@ -12,7 +12,7 @@ export function HTMLPreview() {
 
 	const refresh = useCallback(() => {
 		const { groups, activeGroup } = store.getState();
-		const files = groups[activeGroup].files;
+		const files = groups?.[activeGroup]?.files ?? [];
 
 		const args = files.reduce(
 			(acc, { filename, view }) => {

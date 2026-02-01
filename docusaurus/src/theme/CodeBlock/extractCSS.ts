@@ -1,0 +1,46 @@
+export function extractCSS(code: string): [children: string, styles: string] {
+	const lines = code.split("\n");
+	const styles = [];
+	for (let i = 0; i < lines.length; ++i) {
+		if (lines[i].match(/^\s*\/\/\s*@css\s*$/)) {
+			const style = [];
+			// remove css line
+			lines.splice(i, 1);
+			while (lines.length > 0) {
+				const [line] = lines.splice(i, 1);
+				if (line.match(/^\s*\/\/\s*@\/css\s*$/)) {
+					styles.push(style.join("\n"));
+					break;
+				} else {
+					style.push(line);
+				}
+			}
+			--i;
+		}
+	}
+	return [lines.join("\n"), styles.join("\n")];
+}
+
+// too lazy to combine these rn
+export function extractHead(code: string) {
+	const lines = code.split("\n");
+	const styles = [];
+	for (let i = 0; i < lines.length; ++i) {
+		if (lines[i].match(/^\s*\/\/\s*@head\s*$/)) {
+			const style = [];
+			// remove head line
+			lines.splice(i, 1);
+			while (lines.length > 0) {
+				const [line] = lines.splice(i, 1);
+				if (line.match(/^\s*\/\/\s*@\/head\s*$/)) {
+					styles.push(style.join("\n"));
+					break;
+				} else {
+					style.push(line);
+				}
+			}
+			--i;
+		}
+	}
+	return [lines.join("\n"), styles.join("\n")];
+}

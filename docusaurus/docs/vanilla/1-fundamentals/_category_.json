@@ -1,8 +1,8 @@
 {
 	"label": "Fundamentals",
-	"position": 2,
 	"link": {
-		"type": "generated-index",
-		"description": "Fundamental components of web development"
-	}
+		"description": "Fundamental components of web development",
+		"type": "generated-index"
+	},
+	"position": 2
 }

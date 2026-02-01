@@ -2,7 +2,7 @@ import { CornersInIcon, CornersOutIcon } from "@phosphor-icons/react";
 import { useRef, useState } from "react";
 import { useEventListener } from "usehooks-ts";
 
-import styles from "./LivePreview.module.css";
+import styles from "../LivePreview.module.css";
 
 export function FullScreenButton({
 	elt,
