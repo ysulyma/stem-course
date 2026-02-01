@@ -18,6 +18,7 @@ import { CopyButton } from "./buttons/CopyButton";
 import { DownloadButton } from "./buttons/DownloadButton";
 import { FormatButton } from "./buttons/FormatButton";
 import { FullScreenButton } from "./buttons/FullScreenButton";
+import { ResetButton } from "./buttons/ResetButton";
 import { RunButton } from "./buttons/RunButton";
 import { IntegratedEditor } from "./ColorSchemeAwareEditor";
 import { basicSetup } from "./cm-setup";
@@ -112,6 +113,7 @@ export function LivePreview({
 						<div className={styles.controlGroup}>
 							<RunButton shortcut="Mod-Enter" />
 							<FormatButton shortcut="Mod-;" />
+							<ResetButton />
 						</div>
 						<div className={styles.controlGroup}>
 							<CopyButton />
