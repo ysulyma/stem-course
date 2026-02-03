@@ -15,9 +15,9 @@ import type { ReactNode } from "react";
 import ShowcaseCards from "./_components/ShowcaseCards";
 import ShowcaseFilters from "./_components/ShowcaseFilters";
 
-const TITLE = translate({ message: "Docusaurus Site Showcase" });
+const TITLE = translate({ message: "Showcase" });
 const DESCRIPTION = translate({
-	message: "List of websites people are building with Docusaurus",
+	message: "List of STEM visualizations made in JavaScript",
 });
 const SUBMIT_URL = "https://github.com/facebook/docusaurus/discussions/7826";
 

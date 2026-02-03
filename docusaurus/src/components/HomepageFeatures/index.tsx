@@ -14,32 +14,27 @@ const FeatureList: FeatureItem[] = [
 	{
 		description: (
 			<>
-				Docusaurus was designed from the ground up to be easily installed and
-				used to get your website up and running quickly.
+				No prior background is assumed, but by the end you will be a seasoned
+				frontend developer.
 			</>
 		),
 		Svg: require("@site/static/img/undraw_docusaurus_mountain.svg").default,
-		title: "Easy to Use",
+		title: "Comprehensive",
 	},
 	{
 		description: (
 			<>
-				Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-				ahead and move your docs into the <code>docs</code> directory.
+				2d and 3d graphics, running Python in the browser, interactive
+				videos—whatever you want to achieve, we've got you covered.
 			</>
 		),
 		Svg: require("@site/static/img/undraw_docusaurus_tree.svg").default,
-		title: "Focus on What Matters",
+		title: "Tons of examples",
 	},
 	{
-		description: (
-			<>
-				Extend or customize your website layout by reusing React. Docusaurus can
-				be extended while reusing the same header and footer.
-			</>
-		),
+		description: <>All our examples can be run in the browser!</>,
 		Svg: require("@site/static/img/undraw_docusaurus_react.svg").default,
-		title: "Powered by React",
+		title: "Interactive",
 	},
 ];
 

@@ -78,23 +78,35 @@ export function render({
 	}
 
 	// es module magic
-	console.log({ esm });
 	if (Object.keys(esm).length > 0) {
-		const importMap = document.createElement("script");
-		importMap.setAttribute("type", "importmap");
-		importMap.appendChild(
-			document.createTextNode(
-				JSON.stringify({
-					imports: Object.fromEntries(
-						Object.entries(esm).map(([filename, file]) => [
-							`./${filename}`,
-							`data:text/javascript;charset=UTF-8,${encodeURIComponent(file)}`,
-						]),
-					),
-				}),
-			),
+		const magicImports = Object.fromEntries(
+			Object.entries(esm).map(([filename, file]) => [
+				`./${filename}`,
+				`data:text/javascript;charset=UTF-8,${encodeURIComponent(file)}`,
+			]),
 		);
-		doc.head.appendChild(importMap);
+
+		let importMap = doc.querySelector(
+			`script[type="importmap"]`,
+		) as HTMLScriptElement | null;
+		if (importMap) {
+			const existingImports = JSON.parse(importMap.innerText);
+			importMap.innerText = JSON.stringify({
+				imports: {
+					...existingImports.imports,
+					...magicImports,
+				},
+			});
+		} else {
+			importMap = doc.createElement("script");
+			importMap.setAttribute("type", "importmap");
+			importMap.appendChild(
+				document.createTextNode(JSON.stringify({ imports: magicImports })),
+			);
+			doc.head.insertBefore(importMap, doc.head.firstChild);
+		}
+		if (!importMap) {
+		}
 	}
 
 	// insert client script

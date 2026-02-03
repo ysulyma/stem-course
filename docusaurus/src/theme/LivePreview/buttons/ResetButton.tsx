@@ -23,7 +23,6 @@ export function ResetButton({ shortcut }: { shortcut?: string }) {
 
 	/* reset */
 	const reset = useCallback(() => {
-		console.log(contents);
 		const state = store.getState();
 		for (const groupName in contents.current) {
 			for (const { filename, view } of state.groups[groupName].files) {

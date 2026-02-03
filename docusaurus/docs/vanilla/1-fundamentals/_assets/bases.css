@@ -1,0 +1,78 @@
+/* reset styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* opt in to light/dark depending on user preference */
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  background: light-dark(#eee, #111);
+  color: light-dark(black, white);
+  font-family: sans-serif;
+}
+
+main {
+  /* colors and borders */
+  background: light-dark(#fff, #333);
+  border: 1px solid #aaa;
+  border-width: 0 1px;
+
+  /* this centers it */
+  margin: 0 auto;
+
+  /* dimensions */
+  max-width: 75%;
+  min-height: 100vh;
+
+  padding: 1em 2em;
+}
+
+/* add margins back to paragraphs */
+p {
+  margin: 1em 0;
+}
+
+#table-container {
+  display: flex;
+  gap: 1em;
+  margin: 1em auto;
+
+  @media (width <= 500px) {
+    flex-direction: column;
+  }
+}
+
+/* table styling */
+table {
+  /* set a border radius + clip the corners of the table */
+  border-radius: 4px;
+  overflow: hidden;
+
+  border-collapse: collapse;
+
+  tbody > tr:nth-child(even) {
+    background-color: light-dark(#f3f3f3, #444);
+  }
+
+  tbody > tr:nth-child(odd) {
+    background-color: light-dark(#e0e0e0, #555);
+  }
+
+  /* table header cells */
+  > thead th {
+    background-color: light-dark(cornflowerblue, darkslateblue);
+    padding: 4px 8px;
+    text-align: right;
+  }
+
+  td {
+    font-family: monospace;
+    padding: 2px 8px;
+    text-align: right;
+  }
+}

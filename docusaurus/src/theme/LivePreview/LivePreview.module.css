@@ -159,9 +159,9 @@
     scrollbar-width: thin;
   }
 
-  [class~="cm-content"] {
-    height: 100%;
-  }
+  /* [class~="cm-content"] { */
+  /*   height: 100%; */
+  /* } */
 }
 
 .iframe {

@@ -85,7 +85,8 @@ const config: Config = {
 		],
 	],
 	projectName: "docusaurus", // Usually your repo name.
-	tagline: "Dinosaurs are cool",
+	tagline:
+		"Learn to make interactive web visualizations, specifically aimed at STEM content",
 
 	themeConfig: {
 		// algolia: {

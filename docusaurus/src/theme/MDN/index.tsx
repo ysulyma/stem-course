@@ -73,7 +73,6 @@ export function BrowserTabs({ children }: { children: React.ReactNode }) {
 			})}
 		</Tabs>
 	);
-	console.log(getBrowser.toString());
 
 	if (isClient) return content;
 	return (

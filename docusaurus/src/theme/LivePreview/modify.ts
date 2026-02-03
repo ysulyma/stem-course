@@ -39,6 +39,30 @@ class Line {
 		public parent: Doc,
 	) {}
 
+	before(str: string, indent = 0) {
+		const newLines = str.split("\n");
+		if (newLines[0].trim().length === 0) newLines.shift();
+		if (newLines.at(-1).trim().length === 0) newLines.pop();
+
+		if (newLines.length === 0) return this;
+
+		const whitespaceLength = newLines.reduce(
+			(acc, curr) => Math.min(acc, leadingWhitespace(curr)),
+			leadingWhitespace(newLines[0]),
+		);
+
+		const priorIndent =
+			this.index === 0 ? 0 : leadingWhitespace(this.parent.lines[this.index]);
+
+		for (let i = 0; i < newLines.length; ++i) {
+			newLines[i] =
+				" ".repeat(priorIndent + indent) + newLines[i].slice(whitespaceLength);
+		}
+
+		this.parent.lines.splice(this.index, 0, ...newLines);
+		return this;
+	}
+
 	after(str: string, indent = 0) {
 		const newLines = str.split("\n");
 		if (newLines[0].trim().length === 0) newLines.shift();

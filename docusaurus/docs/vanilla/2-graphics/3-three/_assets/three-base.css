@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  background-color: light-dark(#fff, #272833);
+
+  min-height: 100vh;
+  min-width: 100vw;
+}

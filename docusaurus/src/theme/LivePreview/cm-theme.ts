@@ -74,6 +74,7 @@ function htmlFromPrismTheme(theme: PrismTheme) {
 function jsFromPrismTheme(theme: PrismTheme) {
 	return syntaxHighlighting(
 		HighlightStyle.define([
+			{ tag: tags.comment, ...findStyle(theme.styles, "comment") },
 			{ tag: tags.meta, ...findStyle(theme.styles, "doctype") },
 			{ tag: tags.propertyName, ...findStyle(theme.styles, "property-access") },
 			{ tag: tags.string, ...findStyle(theme.styles, "attr-value") },

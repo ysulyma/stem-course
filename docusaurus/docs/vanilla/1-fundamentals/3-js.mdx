@@ -1,0 +1,178 @@
+---
+sidebar_position: 3
+---
+
+import {LivePreview} from "@site/src/theme/LivePreview"
+import {MDN, CSSProp, CSSSelector, Kbd, BrowserTabs} from "@site/src/theme/MDN"
+import {modify} from "@site/src/theme/LivePreview/modify"
+import MDXCode from "@theme/MDXComponents/Code";
+import MDXPre from "@theme/MDXComponents/Pre";
+import TabItem from "@theme/TabItem";
+import Tabs from "@theme/Tabs";
+
+import basesHtml from "./\_assets/bases.html";
+import basesCss from "!!raw-loader!./\_assets/bases.css";
+import utilsJs from "!!raw-loader!./\_assets/utils.js";
+
+# JavaScript
+
+We insert JavaScript with a <MDN tag="script" /> tag. You can put JavaScript directly inside the `<script>` tag, but usually you want to put it in a separate file, and include it via the <MDN tag="script" attribute="src"/> attribute.
+
+## Browser console
+
+You will need to enable the developer console. Follow the instructions for your browser.
+
+<BrowserTabs>
+  <TabItem value="chrome">
+    https://developer.chrome.com/docs/devtools/console
+
+    You can open the console with <Kbd shortcut="⌥⌘J"/>.
+  </TabItem>
+  <TabItem value="firefox">
+    https://firefox-source-docs.mozilla.org/devtools-user/web_console/
+
+    You can open the console with <Kbd shortcut="⌥⌘K"/>.
+  </TabItem>
+  <TabItem value="safari">
+    First you must [enable developer features](https://developer.apple.com/documentation/safari-developer-tools/enabling-developer-features). Then you can open the console with <Kbd shortcut="⌥⌘C"/>.
+  </TabItem>
+</BrowserTabs>
+
+## Inserting JavaScript
+
+<LivePreview>
+
+```js title="bases.js"
+console.log("Hello World!");
+```
+
+  <MDXPre>
+    <MDXCode className="language-html" metastring={`title="index.html"`}>
+      {basesHtml}
+    </MDXCode>
+  </MDXPre>
+  <MDXPre>
+    <MDXCode className="language-css" metastring={`title="bases.css"`}>
+      {basesCss}
+    </MDXCode>
+  </MDXPre>
+</LivePreview>
+
+## DOM
+
+<LivePreview>
+
+```js title="bases.js"
+// get the container element
+const container = document.getElementById("table-container");
+
+// create an <h1> tag and append it to the container
+const h1 = document.createElement("h1");
+container.appendChild(h1);
+
+// add text to the <h1> tag
+h1.appendChild(document.createTextNode("Hello world!"));
+```
+
+  <MDXPre>
+    <MDXCode className="language-html" metastring={`title="index.html"`}>
+      {basesHtml}
+    </MDXCode>
+  </MDXPre>
+  <MDXPre>
+    <MDXCode className="language-css" metastring={`title="bases.css"`}>
+      {basesCss}
+    </MDXCode>
+  </MDXPre>
+</LivePreview>
+
+
+## Refactoring
+
+<LivePreview height={800}>
+
+```js title="bases.js"
+(() => {
+  const minBase = 2;
+  const maxBase = 32;
+  const rowsPerTable = 10;
+
+  // container element
+  const container = $("#table-container");
+
+  function makeTables(value) {
+    for (
+      let tableStart = minBase;
+      tableStart < maxBase;
+      tableStart += rowsPerTable
+    ) {
+      const tableEnd = Math.min(tableStart + rowsPerTable, maxBase);
+      const table = $e("table");
+
+      // table header
+      table.appendChild(
+        $e("thead", [
+          $e("tr", [$e("th", [$t("Base")]), $e("th", [$t("Value")])]),
+        ]),
+      );
+
+      // table body
+      const tbody = $e("tbody");
+      for (let base = tableStart; base <= tableEnd; ++base) {
+        tbody.appendChild(
+          $e("tr", base === 10 ? { class: "decimal" } : {}, [
+            $e("th", [$t(base)]),
+            $e("td", [$t(value.toString(base))]),
+          ]),
+        );
+      }
+      table.appendChild(tbody);
+
+      // append to container
+      container.appendChild(table);
+    }
+  }
+
+  function bindEventListeners() {
+    const input = $("input");
+
+    input.addEventListener("change", (e) => {
+      const value = parseFloat(e.target.value);
+      if (Number.isNaN(value)) return;
+
+      // inefficient but easy
+      // container.replaceChildren();
+      // makeTables(value);
+
+      // more efficient but duplicates some logic
+      const cells = $$("tbody td", container);
+      for (let index = 0; index < cells.length; ++index) {
+        const base = index + 2;
+        const cell = cells[index];
+        cell.innerHTML = value.toString(base);
+      }
+    });
+  }
+
+  makeTables(parseFloat($("input").value));
+  bindEventListeners();
+})();
+```
+
+  <MDXPre>
+    <MDXCode className="language-js" metastring={`title="utils.js"`}>
+      {utilsJs}
+    </MDXCode>
+  </MDXPre>
+  <MDXPre>
+    <MDXCode className="language-html" metastring={`title="index.html"`}>
+      {modify(basesHtml, doc => doc.line("bases.js").before(`<script src="./utils.js"></script>`))}
+    </MDXCode>
+  </MDXPre>
+  <MDXPre>
+    <MDXCode className="language-css" metastring={`title="bases.css"`}>
+      {basesCss}
+    </MDXCode>
+  </MDXPre>
+</LivePreview>
+

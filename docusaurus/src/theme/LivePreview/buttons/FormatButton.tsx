@@ -95,7 +95,6 @@ async function formatView(view: EditorView, formatter: Formatter) {
 
 	try {
 		const formatted = await formatter(unformatted);
-		console.log(formatted);
 
 		const newSelection = preserveSelection(
 			view.state.selection.main,
