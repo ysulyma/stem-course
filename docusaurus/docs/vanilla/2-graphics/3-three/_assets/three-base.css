@@ -9,7 +9,9 @@
 
 body {
   background-color: light-dark(#fff, #272833);
+}
 
-  min-height: 100vh;
-  min-width: 100vw;
+#container {
+  height: 100vh;
+  width: 100vw;
 }
