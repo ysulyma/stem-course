@@ -6,7 +6,13 @@ import { render, viewContents } from "./utils";
 
 import styles from "./LivePreview.module.css";
 
-export function HTMLPreview() {
+import type { LivePreviewMeta } from ".";
+
+export function HTMLPreview({
+	meta,
+}: {
+	meta?: Record<string, LivePreviewMeta>;
+}) {
 	const store = useBoothStore();
 
 	const { colorMode } = useColorMode();
@@ -48,7 +54,11 @@ export function HTMLPreview() {
 						acc.css[filename] = viewContents(view);
 						break;
 					case "js":
-						acc.js[filename] = viewContents(view);
+						if (meta?.[filename]?.type === "module") {
+							acc.esm[filename] = viewContents(view);
+						} else {
+							acc.js[filename] = viewContents(view);
+						}
 						break;
 					case "html":
 						acc.html = viewContents(view);
@@ -56,13 +66,13 @@ export function HTMLPreview() {
 				}
 				return acc;
 			},
-			{ css: {}, html: "", js: {} } as Parameters<typeof render>[0],
+			{ css: {}, esm: {}, html: "", js: {} } as Parameters<typeof render>[0],
 		);
 
 		iframe.current.srcdoc = render(args);
 
 		return true;
-	}, [store]);
+	}, [meta, store]);
 
 	// initial render
 	useEffect(() => {

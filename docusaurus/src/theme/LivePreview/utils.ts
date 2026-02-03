@@ -42,10 +42,12 @@ export function normalizePath(path: string) {
 export function render({
 	css = {},
 	js = {},
+	esm = {},
 	html,
 }: {
 	css?: Record<string, string>;
 	js?: Record<string, string>;
+	esm?: Record<string, string>;
 	html: string;
 }) {
 	const doc = new DOMParser().parseFromString(html, "text/html");
@@ -73,6 +75,26 @@ export function render({
 
 		scriptTag.removeAttribute("src");
 		scriptTag.textContent = script;
+	}
+
+	// es module magic
+	console.log({ esm });
+	if (Object.keys(esm).length > 0) {
+		const importMap = document.createElement("script");
+		importMap.setAttribute("type", "importmap");
+		importMap.appendChild(
+			document.createTextNode(
+				JSON.stringify({
+					imports: Object.fromEntries(
+						Object.entries(esm).map(([filename, file]) => [
+							`./${filename}`,
+							`data:text/javascript;charset=UTF-8,${encodeURIComponent(file)}`,
+						]),
+					),
+				}),
+			),
+		);
+		doc.head.appendChild(importMap);
 	}
 
 	// insert client script

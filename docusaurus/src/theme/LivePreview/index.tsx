@@ -20,7 +20,6 @@ import { FormatButton } from "./buttons/FormatButton";
 import { FullScreenButton } from "./buttons/FullScreenButton";
 import { ResetButton } from "./buttons/ResetButton";
 import { RunButton } from "./buttons/RunButton";
-import { IntegratedEditor } from "./ColorSchemeAwareEditor";
 import { basicSetup } from "./cm-setup";
 import {
 	editorTheme,
@@ -28,6 +27,7 @@ import {
 	highlightingExtension,
 } from "./cm-theme";
 import { HTMLPreview } from "./HTMLPreview";
+import { IntegratedEditor } from "./IntegratedEditor";
 import { FileTabs } from "./livecode/FileTabs";
 import { parseMetaString } from "./utils";
 
@@ -39,6 +39,10 @@ export interface LivePreviewFile {
 	content: string;
 	filename: string;
 	language: SupportedLanguage;
+}
+
+export interface LivePreviewMeta {
+	type?: string;
 }
 
 export interface LivePreviewContext {
@@ -71,10 +75,15 @@ export function LivePreview({
 	children?: React.ReactNode;
 	height?: number;
 }) {
-	const files = useMemo((): LivePreviewFile[] => {
+	const [files, meta] = useMemo((): [
+		LivePreviewFile[],
+		Record<string, LivePreviewMeta>,
+	] => {
 		if (isReactElement(children, MDXPre)) children = [children];
 
-		return Array.from(children).reduce((acc, child) => {
+		const meta: Record<string, LivePreviewMeta> = {};
+
+		const files = Array.from(children).reduce((acc, child) => {
 			if (!isReactElement(child, MDXPre)) return acc;
 			const code = child.props.children;
 			if (!isReactElement(code, MDXCode)) return acc;
@@ -91,9 +100,15 @@ export function LivePreview({
 			const content = code.props.children;
 			if (typeof content !== "string") return acc;
 
+			if (attrs.type) {
+				meta[attrs.title] = { type: attrs.type };
+			}
+
 			acc.push({ content, filename: attrs.title, language });
 			return acc;
 		}, [] as LivePreviewFile[]);
+
+		return [files, meta];
 	}, [children]);
 
 	const root = useRef<HTMLElement>(null);
@@ -125,7 +140,7 @@ export function LivePreview({
 			</div>
 
 			<div className={styles.split}>
-				{files.map(({ content, filename, language }) => (
+				{files.map(({ content, filename, language, meta }) => (
 					<EditorPanel
 						className={styles.TabsContent}
 						filename={filename}
@@ -143,13 +158,14 @@ export function LivePreview({
 								editorTheme,
 								highlightingExtension(language, "light"),
 							]}
+							meta={meta}
 						/>
 					</EditorPanel>
 				))}
 
 				<Resize max={0.3} min={0.1} />
 
-				<HTMLPreview />
+				<HTMLPreview meta={meta} />
 			</div>
 		</CodeBooth>
 	);
