@@ -1,0 +1,57 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+:root {
+	color-scheme: light dark;
+}
+
+body {
+	background-color: light-dark(#fff, #272733);
+	font-family: sans-serif;
+	height: 100vh;
+	width: 100vw;
+}
+
+#container {
+	/* subtle grid background */
+	background-image: url("./grid.png");
+	height: 100%;
+	width: 100%;
+}
+
+aside {
+	position: fixed;
+	top: 0;
+	z-index: 20;
+
+	--radius: 4px;
+
+	background-color: light-dark(rgba(0, 0, 0, 10%), rgba(0, 0, 0, 70%));
+}
+
+#function {
+	border-bottom-right-radius: var(--radius);
+	left: 0;
+	padding: 0 1em;
+}
+
+#controls {
+	border-bottom-left-radius: var(--radius);
+	padding: 8px;
+	right: 0;
+
+	&.hidden {
+		display: none;
+	}
+
+	caption {
+		font-weight: bold;
+	}
+
+	td:first-child {
+		padding-right: 4px;
+		text-align: right;
+	}
+}

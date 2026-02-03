@@ -1,0 +1,21 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+:root {
+	color-scheme: light dark;
+}
+
+body {
+	background-color: light-dark(#fff, #272733);
+	height: 100vh;
+	width: 100vw;
+}
+
+#container {
+	/* subtle grid background */
+	background-image: url("./grid.png");
+	height: 100%;
+	width: 100%;
+}
