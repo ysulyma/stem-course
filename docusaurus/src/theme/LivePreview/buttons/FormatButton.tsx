@@ -3,6 +3,8 @@ import type { EditorView } from "@codemirror/view";
 import { useBoothStore } from "@lqv/codebooth";
 import { BracketsCurlyIcon } from "@phosphor-icons/react";
 import * as prettier from "prettier";
+import babelPlugin from "prettier/plugins/babel";
+import estreePlugin from "prettier/plugins/estree";
 import htmlPlugin from "prettier/plugins/html";
 import cssPlugin from "prettier/plugins/postcss";
 import { useCallback, useEffect } from "react";
@@ -32,10 +34,18 @@ export function FormatButton({ shortcut }: { shortcut?: string }) {
 				break;
 			case "html":
 				formatter = (code) =>
-					prettier.format(code, { filepath: filename, plugins: [htmlPlugin] });
+					prettier.format(code, {
+						filepath: filename,
+						parser: "html",
+						plugins: [htmlPlugin],
+					});
 				break;
 			case "js":
-				formatter = (code) => prettier.format(code, { filepath: filename });
+				formatter = (code) =>
+					prettier.format(code, {
+						filepath: filename,
+						plugins: [estreePlugin, babelPlugin],
+					});
 				break;
 		}
 
