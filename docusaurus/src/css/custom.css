@@ -41,3 +41,14 @@
   position: absolute;
   overflow: hidden;
 }
+
+/* browser icons */
+.tabs__item {
+  align-items: center;
+  display: flex;
+  gap: 1ex;
+
+  > img {
+    height: 1em;
+  }
+}
