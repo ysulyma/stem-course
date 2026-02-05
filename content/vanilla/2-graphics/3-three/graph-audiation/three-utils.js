@@ -21,9 +21,12 @@ export function makeScene({
 		1000,
 	);
 
+	// set camera up direction
 	if (cameraConfig.up) {
 		camera.up.set(...cameraConfig.up);
 	}
+
+	// set camera position
 	if (cameraConfig.position) {
 		camera.position.set(...cameraConfig.position);
 	}

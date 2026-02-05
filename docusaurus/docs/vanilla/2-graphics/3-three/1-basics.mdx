@@ -1,58 +1,64 @@
 # Basic setup
-
+#
+import CodeBlock from '@theme/CodeBlock';
 import {LivePreview} from "@site/src/theme/LivePreview"
-import {MDN, CSSProp, CSSSelector, Kbd} from "@site/src/theme/MDN"
-import {modify} from "@site/src/theme/LivePreview/modify"
+import {MDN, CSSProp, CSSSelector, Kbd, ThreeDocs} from "@site/src/theme/MDN"
+import {modify, Doc} from "@site/src/theme/LivePreview/modify"
 import MDXCode from "@theme/MDXComponents/Code";
 import MDXPre from "@theme/MDXComponents/Pre";
 import TabItem from "@theme/TabItem";
 import Tabs from "@theme/Tabs";
 
 import ultraBasic from "./\_assets/ultra-basic.html";
+import minimalJs from "!!raw-loader!./\_assets/minimal.js";
+
 import baseHtml from "./\_assets/three-base.html";
 import baseCss from "!!raw-loader!./\_assets/three-base.css";
 import threeUtils from "!!raw-loader!@site/static/content/vanilla/2-graphics/3-three/graph-audiation/three-utils.js";
 
+export const $ultraBasic = new Doc(ultraBasic);
+export const $minimalJs = new Doc(minimalJs);
+
 THREE.js docs:
 - [Installation](https://threejs.org/manual/#en/installation) — we are using Option 2
 - [Creating a scene](https://threejs.org/manual/#en/creating-a-scene)
+- [Reference search](https://threejs.org/docs/)
+
+## Running a local server
+
+[Download Node.js](https://nodejs.org/en/download) and then run
+
+```bash
+npx serve .
+```
+
+in the directory you've set up for this course. You should see something like this:
+
+```
+   ┌──────────────────────────────────────────┐
+   │                                          │
+   │   Serving!                               │
+   │                                          │
+   │   - Local:    http://localhost:3000      │
+   │   - Network:  http://192.168.0.33:3000   │
+   │                                          │
+   │   Copied local address to clipboard!     │
+   │                                          │
+   └──────────────────────────────────────────┘
+```
+
+Copy that address into your browser.
 
 ## Minimal scene
 
 Here is an absolutely minimal scene.
 
 <LivePreview>
-
-```js title="scene.js"
-import * as THREE from "three";
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000,
-);
-
-const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setAnimationLoop(animate);
-document.body.appendChild(renderer.domElement);
-
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
-
-camera.position.z = 5;
-
-function animate() {
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
-
-  renderer.render(scene, camera);
-}
-```
+<MDXPre>
+  <MDXCode className="language-js" metastring={`title="scene.js"`}>
+    {minimalJs}
+  </MDXCode>
+</MDXPre>
 
 <MDXPre>
   <MDXCode className="language-html" metastring={`title="index.html"`}>
@@ -60,6 +66,90 @@ function animate() {
   </MDXCode>
 </MDXPre>
 </LivePreview>
+
+Let's walk through what's going on here.
+
+### index.html
+
+export const typeModule = $ultraBasic.line(`type="module"`);
+
+<CodeBlock language="html" showLineNumbers={typeModule.index+1} title="index.html">
+  {typeModule.toString()}
+</CodeBlock>
+
+This marks the file `scene.js` as an [<abbr title="ECMAScript">ES</abbr> module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). ES modules are the modern way to break JavaScript code into reusable chunks and share them. Specifically, this is what lets us use the [`import`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) syntax in `bases.js`.
+
+This is also what necessitates [running a local server](#running-a-local-server): for security reasons, ES modules can't be run in `file://` mode.
+
+export const importMap = $ultraBasic.line(`type="importmap"`).to(`</script>`);
+
+<CodeBlock language="html" showLineNumbers={importMap.startIndex+1} title="index.html">
+  {importMap.toString()}
+</CodeBlock>
+
+This is an [import map](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script/type/importmap). This tells the browser how to resolve `"three"` to an actual JS file. Without import maps, we would have to write
+
+<CodeBlock language="js" showLineNumbers={importThree.index+1} title="scene.js">
+  {importThree.toString().replace("three", importMap.toString().match(/"three": "(.+)"/)[1])}
+</CodeBlock>
+
+which is harder to read and maintain.
+
+### scene.js
+
+Now let's take a look at the JavaScript.
+
+#### import syntax
+
+export const importThree = $minimalJs.line(`from "three"`);
+
+<CodeBlock language="js" showLineNumbers={importThree.index+1} title="scene.js">
+  {importThree.toString()}
+</CodeBlock>
+
+This is a modern [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) statement. It loads all of THREE.js into a variable called `THREE`. Unlike older module-loading solutions, the variable `THREE` is not available outside of `scene.js`—this is one advantage of the new syntax.
+
+Another advantage of the new import syntax is that it allows tooling to statically determine which imports you actually use. This enables **bundlers** (covered in the Framework part of the course) to perform [tree shaking](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking), meaning they get rid of code that you don't actually use. **If you use a bundler**, then it is more efficient (in terms of file size) to only import what you need:
+
+```js
+import {
+  BoxGeometry,
+  Mesh,
+  MeshBasicMaterial,
+  PerspectiveCamera,
+  Scene,
+  WebGLRenderer
+} from "three";
+```
+
+However, in plain JavaScript it doesn't make a difference. (Although browsers can do the equivalent of tree-shaking, most libraries are not structured in a way that would enable this, since downloading one big file is usually faster than making roundtrips for several small files.)
+
+#### Boilerplate
+Next we have some boilerplate that should be understandable from the comments. Here are the relevant documentation links:
+
+- <ThreeDocs item="Scene" prefix />
+- <ThreeDocs item="PerspectiveCamera" prefix />
+- <ThreeDocs item="WebGLRenderer" prefix />
+
+I don't really know how to do proper camera work, I just copy the same settings between every project.
+
+#### Adding objects
+The most interesting part is:
+
+export const createMesh = $minimalJs.range("const geometry", "scene.add");
+
+<CodeBlock language="js" showLineNumbers={createMesh.startIndex+1} title="scene.js">
+  {createMesh.toString()}
+</CodeBlock>
+
+This is the typical pattern for adding objects to a THREE.js scene. Most objects in THREE.js are <ThreeDocs item="Mesh" />es. Every Mesh has an associated <ThreeDocs item="BufferGeometry" /> defining its shape and a <ThreeDocs item="Material" /> defining its color/appearance. The specific ones we used here are:
+
+- <ThreeDocs item="BoxGeometry" prefix />
+- <ThreeDocs item="MeshBasicMaterial" prefix />
+
+:::warning
+If you change the `MeshBasicMaterial` to another material, such as a <ThreeDocs item="MeshPhongMaterial" prefix />, the cube will disappear! This is because we haven't yet added any [lights](https://threejs.org/manual/#en/lights) to our scene.
+:::
 
 ## Refactored code
 
