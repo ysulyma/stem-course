@@ -3,7 +3,7 @@ sidebar_position: 3
 ---
 
 import {LivePreview} from "@site/src/theme/LivePreview"
-import {MDN, CSSProp, CSSSelector, Kbd, BrowserTabs} from "@site/src/theme/MDN"
+import {MDN, MdnApi, CSSProp, CSSSelector, Kbd, BrowserTabs} from "@site/src/theme/MDN"
 import {modify} from "@site/src/theme/LivePreview/modify"
 import MDXCode from "@theme/MDXComponents/Code";
 import MDXPre from "@theme/MDXComponents/Pre";
@@ -16,7 +16,11 @@ import utilsJs from "!!raw-loader!./\_assets/utils.js";
 
 # JavaScript
 
-We insert JavaScript with a <MDN tag="script" /> tag. You can put JavaScript directly inside the `<script>` tag, but usually you want to put it in a separate file, and include it via the <MDN tag="script" attribute="src"/> attribute.
+To make our content interactive, we use JavaScript.
+
+Links:
+
+- [MDN JavaScript guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
 
 ## Browser console
 
@@ -40,6 +44,8 @@ You will need to enable the developer console. Follow the instructions for your 
 
 ## Inserting JavaScript
 
+We insert JavaScript with a <MDN tag="script" /> tag. You can put JavaScript directly inside the `<script>` tag, but usually you want to put it in a separate file, and include it via the <MDN tag="script" attribute="src"/> attribute.
+
 <LivePreview>
 
 ```js title="bases.js"
@@ -58,20 +64,25 @@ console.log("Hello World!");
   </MDXPre>
 </LivePreview>
 
-## DOM
+To see this message, open up your browser console. [`console.log()`](https://developer.mozilla.org/en-US/docs/Web/API/console/log_static) is to help you in debugging your own code, not for communicating with your users.
+
+Let's log some other data types:
 
 <LivePreview>
 
 ```js title="bases.js"
-// get the container element
-const container = document.getElementById("table-container");
+console.log("4", "as a string");
+console.log(4, "as a number");
+console.log([1, 2, "duck", "goose"], "is an array");
 
-// create an <h1> tag and append it to the container
-const h1 = document.createElement("h1");
-container.appendChild(h1);
-
-// add text to the <h1> tag
-h1.appendChild(document.createTextNode("Hello world!"));
+const x = "I am a variable";
+console.log({
+  // shorthand syntax, equivalent to writing x: x
+  x,
+  duck: {
+    goose: "honk"
+  }
+}, "is an object");
 ```
 
   <MDXPre>
@@ -85,6 +96,81 @@ h1.appendChild(document.createTextNode("Hello world!"));
     </MDXCode>
   </MDXPre>
 </LivePreview>
+
+Notice that 4 appears in two different colors depending on whether it is the _string_ `"4"` or the _number_ `4`! Although JavaScript implicitly converts between these in some situations, it is important to understand the difference.
+
+A common pattern in JavaScript is
+```js
+console.log({ myVariable });
+```
+to log the value of a variable. This is logging the _object_ `{"myVariable": myVariable}`. This is better than just doing `console.log(myVariable)` since it also includes the name of the variable in the log.
+
+
+## DOM
+
+The <abbr title="Document Object Model">DOM</abbr> is how JavaScript code interacts with HTML documents. We can _select_ existing elements on the page, _create_ new elements, and _modify_ existing elements (e.g. by adding children).
+
+<LivePreview>
+
+```js title="bases.js"
+// get the container element
+const container = document.getElementById("table-container");
+
+// look in your console
+console.log({ container });
+
+// create an <h1> tag and append it to the container
+const h1 = document.createElement("h1");
+container.append(h1);
+
+// add text to the <h1> tag
+h1.append("Hello world!");
+```
+
+  <MDXPre>
+    <MDXCode className="language-html" metastring={`title="index.html"`}>
+      {basesHtml}
+    </MDXCode>
+  </MDXPre>
+  <MDXPre>
+    <MDXCode className="language-css" metastring={`title="bases.css"`}>
+      {basesCss}
+    </MDXCode>
+  </MDXPre>
+</LivePreview>
+
+**Selection methods**
+
+These are the ones you'll use most often, which let you find either the first or all elements matching a CSS selector:
+
+- <MdnApi link="Document/querySelector">document.querySelector()</MdnApi> and <MdnApi link="Element/querySelector">Element.querySelector()</MdnApi>
+- <MdnApi link="Document/querySelectorAll">document.querySelectorAll()</MdnApi> and <MdnApi link="Element/querySelectorAll">Element.querySelectorAll()</MdnApi>
+
+Beware that for historical reasons, `querySelectorAll()` returns a <MdnApi link="NodeList" noCode>weird type</MdnApi> instead of an array. So you'll often want to write `Array.from(document.querySelectorAll(...))`.
+
+Some other selection methods you may encounter:
+
+- <MdnApi link="Document/getElementsByClassName">document.getElementsByClassName()</MdnApi>
+- <MdnApi link="Document/getElementById">document.getElementById()</MdnApi>
+- <MdnApi link="Document/getElementsByTagName">document.getElementsByTagName()</MdnApi>
+- <MdnApi link="Element/closest">Element.closest()</MdnApi>
+
+**Creation methods**
+- <MdnApi link="Document/createElement">document.createElement()</MdnApi>
+- <MdnApi link="Document/createElementNS">document.createElementNS()</MdnApi> ← you need this for creating SVG elements, otherwise ignore it
+- <MdnApi link="Document/createTextNode">document.createTextNode()</MdnApi>
+
+**Manipulation methods**
+- <MdnApi link="Element/after">Element.after()</MdnApi>
+- <MdnApi link="Element/append">Element.append()</MdnApi>
+- <MdnApi link="Element/before">Element.before()</MdnApi>
+- <MdnApi link="Element/getAttribute">Element.getAttribute()</MdnApi>
+- <MdnApi link="Element/hasAttribute">Element.hasAttribute()</MdnApi>
+- <MdnApi link="Element/prepend">Element.prepend()</MdnApi>
+- <MdnApi link="Element/remove">Element.remove()</MdnApi>
+- <MdnApi link="Element/replaceWith">Element.replaceWith()</MdnApi>
+- <MdnApi link="Element/setAttribute">Element.setAttribute()</MdnApi>
+- <MdnApi link="Element/removeAttribute">Element.removeAttribute()</MdnApi>
 
 
 ## Refactoring
