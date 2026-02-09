@@ -9,6 +9,17 @@ export const ExternalLink = (props: React.JSX.IntrinsicElements["a"]) => (
 	<a rel="noopener noreferrer" target="_blank" {...props} />
 );
 
+export const MdnApi = ({ children, link, noCode = false }) => {
+	const content = noCode ? children : <code>{children}</code>;
+	return (
+		<ExternalLink
+			href={`https://developer.mozilla.org/en-US/docs/Web/API/${link}`}
+		>
+			{content}
+		</ExternalLink>
+	);
+};
+
 export const MDN = ({ tag, attribute }) => (
 	<ExternalLink
 		href={
@@ -41,6 +52,20 @@ export const CSSSelector = ({ selector }) => (
 	</code>
 );
 
+export const ThreeDocs = ({
+	item,
+	prefix = false,
+}: {
+	item: string;
+	prefix?: boolean;
+}) => (
+	<code>
+		<ExternalLink href={`https://threejs.org/docs/#${item}`}>
+			{`${prefix ? "THREE." : ""}${item}`}
+		</ExternalLink>
+	</code>
+);
+
 // ⌘⇧↩⌥⎋⌃
 export const Kbd = ({ shortcut }) => {
 	return <kbd style={{ fontSize: "1.1em" }}>{shortcut}</kbd>;
@@ -49,13 +74,17 @@ export const Kbd = ({ shortcut }) => {
 // pretty sure this is all of them :P
 type Browser = "chrome" | "firefox" | "safari";
 
-export function BrowserTabs({ children }: { children: React.ReactNode }) {
+export function BrowserTabs({
+	children,
+	groupId = "browser",
+	...props
+}: React.ComponentProps<typeof Tabs>) {
 	const id = useId();
 
 	const currentBrowser = isClient ? getBrowser() : "unknown";
 
 	const content = (
-		<Tabs>
+		<Tabs groupId={groupId} {...props}>
 			{/** biome-ignore lint/suspicious/noExplicitAny: we are doing evil things :) */}
 			{Children.map(children, (child: any) => {
 				if (child.type !== TabItem) return child;

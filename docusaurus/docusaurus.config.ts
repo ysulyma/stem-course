@@ -173,18 +173,24 @@ const config: Config = {
 					sidebarId: "tutorialSidebar",
 					type: "docSidebar",
 				},
-				// {
-				// 	label: "🪩 Framework",
-				// 	position: "left",
-				// 	sidebarId: "reactSidebar",
-				// 	type: "docSidebar",
-				// },
+				{
+					label: "🪩 Framework",
+					position: "left",
+					sidebarId: "reactSidebar",
+					type: "docSidebar",
+				},
 				// {
 				// 	label: "🤯 Video",
 				// 	position: "left",
 				// 	sidebarId: "liqvidSidebar",
 				// 	type: "docSidebar",
 				// },
+				{
+					label: "🧐 Tips",
+					position: "left",
+					sidebarId: "tipsSidebar",
+					type: "docSidebar",
+				},
 				{ label: "🖼 Showcase", position: "right", to: "showcase" },
 				// {
 				// 	position: "right",
@@ -203,7 +209,7 @@ const config: Config = {
 			title: "JS × STEM",
 		},
 		prism: {
-			additionalLanguages: ["css"],
+			additionalLanguages: ["bash", "css"],
 			darkTheme: prismThemes.dracula,
 			theme: prismThemes.github,
 		},
