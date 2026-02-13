@@ -1,0 +1,91 @@
+import { LivePreview } from "@site/src/theme/LivePreview";
+
+# MathQuill
+
+To allow viewers to enter custom formulas, you can use [MathQuill](http://mathquill.com/).
+
+## Basic setup
+
+We will load MathQuill from a CDN: https://cdnjs.com/libraries/mathquill/0.10.1. Note that jQuery is also required.
+
+<LivePreview>
+
+```html title="index.html"
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MathQuill example</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css"
+      integrity="sha512-/MlSi6MBnEjKBuoY+vWZE8slTPRlkaKiE46RE0L1jQHodl48ndAOjkVB0GKXHwVmbQhpnVdCTzsjoDGgkbUjyg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 1em;
+      }
+
+      #math-field {
+        border: 1px solid #eee;
+        min-width: 4em;
+      }
+
+      #latex {
+        background-color: light-dark(#eee, #333);
+        border-radius: 2px;
+        font-family: monospace;
+
+        :not(:empty) {
+          padding: 2px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <p>Type math here: <span id="math-field"></span></p>
+    <p>LaTeX of what you typed:</p>
+    <div id="latex"></div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"
+      integrity="sha512-h9kKZlwV1xrIcr2LwAPZhjlkx+x62mNwuQK5PAu9d3D+JXMNlGx8akZbqpXvp0vA54rz+DrqYVrzUGDMhwKmwQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"
+      integrity="sha512-Qsh05D07P6dURSZn8Qk+j8GI7cEK0OhXleZvTofmucwoDSkBC0juWf1401JdSE8os2kWEezMu7e9mlnszm3yEw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
+```
+
+```js title="script.js"
+const mathFieldSpan = document.getElementById("math-field");
+const latexSpan = document.getElementById("latex");
+
+const MQ = MathQuill.getInterface(2); // for backcompat
+const mathField = MQ.MathField(mathFieldSpan, {
+  spaceBehavesLikeTab: true, // configurable
+  handlers: {
+    edit: function () {
+      // useful event handlers
+      latexSpan.textContent = mathField.latex(); // simple API
+    },
+  },
+});
+```
+
+</LivePreview>
