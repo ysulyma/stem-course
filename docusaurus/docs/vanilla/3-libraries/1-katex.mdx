@@ -1,0 +1,67 @@
+import { LivePreview } from "@site/src/theme/LivePreview";
+
+# KaTeX
+
+To render LaTeX equations, we can use [KaTeX](https://katex.org/).
+
+## Basic setup
+
+Follow the instructions on https://katex.org/docs/browser:
+
+<LivePreview>
+
+```html title="index.html"
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KaTeX example</title>
+
+    <!-- KaTeX -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.28/dist/katex.min.css"
+      integrity="sha384-Wsr4Nh3yrvMf2KCebJchRJoVo1gTU6kcP05uRSh5NV3sj9+a8IomuJoQzf3sMq4T"
+      crossorigin="anonymous"
+    />
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.28/dist/katex.min.js"
+      integrity="sha384-+W9OcrYK2/bD7BmUAk+xeFAyKp0QjyRQUCxeU31dfyTt/FrPsUgaBTLLkVf33qWt"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.28/dist/contrib/auto-render.min.js"
+      integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+      crossorigin="anonymous"
+      onload="renderMathInElement(document.body);"
+    ></script>
+  </head>
+  <body>
+    <p>Here is some inline math: \(f(x, y) = x^2y\)</p>
+    <p>Here is some display math:</p>
+    \[ x = \frac{-b \pm \sqrt{b^2 - 4a}}{2a} \]
+    <p>Derivation:</p>
+    \[\begin{aligned}
+      ax^2 + bx + c &= 0\\
+      ax^2 + bx &= -c\\
+    \end{aligned}\]
+  </body>
+</html>
+```
+
+</LivePreview>
+
+## TypeScript usage
+
+```bash
+npm install --save-dev @types/katex
+```
+
+
