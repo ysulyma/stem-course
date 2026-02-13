@@ -1,0 +1,189 @@
+import ReactPlayer from "react-player";
+import TabItem from "@theme/TabItem";
+import Tabs from "@theme/Tabs";
+import { Kbd, KbdTable, OSTabs } from "@site/src/theme/MDN";
+
+# Keyboard shortcuts
+
+Keyboard shortcuts are a much faster way to get around your computer than using a mouse. Here are some useful ones.
+
+Additionally, non-sighted users rely on the keyboard to navigate your app. Make sure that your app can be used without a mouse!
+
+## General
+
+These shortcuts work in most apps.
+
+<OSTabs>
+  <TabItem value="linux">
+    <KbdTable
+      shortcuts={[
+        { key: "Ctrl+N", action: "New document" },
+        { key: "Ctrl+O", action: "Open" },
+        { key: "Alt+F4", action: "Quit" },
+        { key: "Ctrl+S", action: "Save" },
+        { key: "Ctrl+W", action: "Close window" },
+      ]}
+    />
+  </TabItem>
+  <TabItem value="mac">
+    <KbdTable
+      shortcuts={[
+        { key: "mac(Cmd+H)", action: "Hide window" },
+        { key: "mac(Cmd+M)", action: "Minimize window" },
+        { key: "mac(Cmd+N)", action: "New document" },
+        { key: "mac(Cmd+O)", action: "Open" },
+        { key: "mac(Cmd+Q)", action: "Quit" },
+        { key: "mac(Cmd+S)", action: "Save" },
+        { key: "mac(Cmd+W)", action: "Close window" },
+        { key: "mac(Cmd+,)", action: "Settings" },
+      ]}
+    />
+
+    :::tip
+    Many apps and sites use the `Escape` key to close dialogs, but the `Escape` key is very far away. You can remap `CapsLock` to `Escape` via
+    `System Settings` &gt; `Keyboard` &gt; `Keyboard Shortcuts…` &gt; `Modifier Keys`:
+
+    <ReactPlayer
+      loop
+      muted
+      src="/videos/en-US/remap-escape.mov"
+      style={{ aspectRatio: "1426/1252", height: "400px", width: "auto" }}
+    />
+
+    This may seem like a strange suggestion (at least it did to me initially), but once you start using `Escape` regularly you'll find that it's useful in lots of apps!
+    :::
+
+  </TabItem>
+  <TabItem value="windows">
+    <KbdTable
+      shortcuts={[
+        { key: "Ctrl+N", action: "New document" },
+        { key: "Ctrl+O", action: "Open" },
+        { key: "Alt+F4", action: "Quit" },
+        { key: "Ctrl+S", action: "Save" },
+        { key: "Ctrl+W", action: "Close window" },
+      ]}
+    />
+  </TabItem>
+</OSTabs>
+
+## Navigation
+
+### File explorer
+
+<OSTabs>
+  <TabItem value="mac">
+    These shortcuts work in both browsers and Finder:
+    <KbdTable
+      shortcuts={[
+        { key: "mac(Cmd+T)", action: "New tab" },
+        { key: "mac(Shift+Cmd+[)", action: "Previous tab" },
+        { key: "mac(Shift+Cmd+])", action: "Next tab" },
+        { key: "mac(Cmd+[)", action: "Back in history" },
+        { key: "mac(Cmd+])", action: "Forward in history" },
+      ]}
+    />
+  </TabItem>
+</OSTabs>
+
+### Browser
+
+    These shortcuts work in browsers:
+
+<OSTabs>
+  <TabItem value="mac">
+    <KbdTable
+      shortcuts={[
+        {
+          key: {
+            raw: (
+              <>
+                <kbd>⌘1</kbd>–<kbd>⌘9</kbd>
+              </>
+            ),
+          },
+          action: (
+            <>
+              Select n<sup>th</sup> tab
+            </>
+          ),
+        },
+        { key: "mac(Cmd+L)", action: "Select location bar" },
+        { key: "mac(Shift+Cmd+T)", action: "Reopen closed tab" },
+        { key: "mac(Cmd+R)", action: "Refresh" },
+        { key: "mac(Shift+Cmd+R)", action: "Hard refresh (clears cache)" },
+      ]}
+    />
+  </TabItem>
+</OSTabs>
+
+## Text
+
+Here are some shortcuts for moving your cursor around.
+
+### Moving the cursor
+
+<OSTabs>
+  <TabItem value="mac">
+    <KbdTable
+      shortcuts={[
+        { key: "mac(Cmd+A)", action: "Select all" },
+        { key: "mac(Alt+Left)", action: "Back one word" },
+        { key: "mac(Alt+Right)", action: "Forward one word" },
+        { key: "mac(Cmd+Left)", action: "Beginning of line" },
+        { key: "mac(Cmd+Right)", action: "End of line" },
+        {
+          key: { raw: "Hold down Shift" },
+          action: "Select text",
+        },
+      ]}
+    />
+  </TabItem>
+</OSTabs>
+
+### Copy/paste
+
+Use these shortcuts instead of right-clicking to copy and paste. Note that these shortcuts also work in the file explorer!
+
+<OSTabs>
+  <TabItem value="linux">
+    <KbdTable
+      shortcuts={[
+        { key: "Ctrl+C", action: "Copy" },
+        { key: "Ctrl+P", action: "Paste" },
+        { key: "Ctrl+X", action: "Cut" },
+      ]}
+    />
+  </TabItem>
+  <TabItem value="mac">
+    <KbdTable
+      shortcuts={[
+        { key: "mac(Cmd+C)", action: "Copy" },
+        { key: "mac(Cmd+P)", action: "Paste" },
+        { key: "mac(Cmd+X)", action: "Cut" },
+      ]}
+    />
+  </TabItem>
+  <TabItem value="windows">
+    <KbdTable
+      shortcuts={[
+        { key: "Ctrl+C", action: "Copy" },
+        { key: "Ctrl+P", action: "Paste" },
+        { key: "Ctrl+X", action: "Cut" },
+      ]}
+    />
+  </TabItem>
+</OSTabs>
+
+### Arrow key alternatives
+
+The arrow keys are handy for moving around in a document, but they are very far away. These alternatives let you navigate without moving your hands from home row.
+
+<KbdTable
+  shortcuts={[
+    { key: "mac(Ctrl+N)", action: "Down (↓)" },
+    { key: "mac(Ctrl+P)", action: "Up (↑)" },
+    { key: "mac(Ctrl+F)", action: "Forward (→)" },
+    { key: "mac(Ctrl+B)", action: "Back (←)" },
+  ]}
+/>
