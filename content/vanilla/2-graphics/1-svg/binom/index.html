@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binomial Theorem Visualization</title>
+
+    <!-- KaTeX -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.28/dist/katex.min.css"
+      integrity="sha384-Wsr4Nh3yrvMf2KCebJchRJoVo1gTU6kcP05uRSh5NV3sj9+a8IomuJoQzf3sMq4T"
+      crossorigin="anonymous"
+    />
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.28/dist/katex.min.js"
+      integrity="sha384-+W9OcrYK2/bD7BmUAk+xeFAyKp0QjyRQUCxeU31dfyTt/FrPsUgaBTLLkVf33qWt"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.28/dist/contrib/auto-render.min.js"
+      integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+      crossorigin="anonymous"
+      onload="renderMathInElement(document.body)"
+    ></script>
+  <style>
+    body { font-family: system-ui; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    .controls { margin-bottom: 1rem; }
+    .controls label { font-weight: bold; }
+    #slider { width: 200px; margin-left: 0.5rem; }
+    #nValue { margin-left: 0.5rem; }
+    svg { display: block; margin: 1rem 0; }
+    .path { stroke: #ccc; stroke-width: 2; fill: none; }
+    .path.highlight { stroke: #e74c3c; stroke-width: 3; }
+    .axis-label { font-size: 14px; cursor: pointer; }
+    .axis-label:hover, .axis-label.active { fill: #e74c3c; }
+    #equation { font-size: 1.5rem; margin-top: 1rem; }
+    #equation .term { cursor: pointer; padding: 0 2px; border-radius: 3px; }
+    #equation .term:hover, #equation .term.active { background: #ffe0e0; }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <label>n = <span id="nValue">3</span></label>
+    <input type="range" id="slider" min="1" max="8" value="3">
+  </div>
+  <svg id="svg"></svg>
+  <div id="equation"></div>
+  <script  src="main.js" type="module"></script>
+</body>
+</html>
