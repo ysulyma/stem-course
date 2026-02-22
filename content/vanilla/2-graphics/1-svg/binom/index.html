@@ -29,29 +29,15 @@
       crossorigin="anonymous"
       onload="renderMathInElement(document.body)"
     ></script>
-  <style>
-    body { font-family: system-ui; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-    .controls { margin-bottom: 1rem; }
-    .controls label { font-weight: bold; }
-    #slider { width: 200px; margin-left: 0.5rem; }
-    #nValue { margin-left: 0.5rem; }
-    svg { display: block; margin: 1rem 0; }
-    .path { stroke: #ccc; stroke-width: 2; fill: none; }
-    .path.highlight { stroke: #e74c3c; stroke-width: 3; }
-    .axis-label { font-size: 14px; cursor: pointer; }
-    .axis-label:hover, .axis-label.active { fill: #e74c3c; }
-    #equation { font-size: 1.5rem; margin-top: 1rem; }
-    #equation .term { cursor: pointer; padding: 0 2px; border-radius: 3px; }
-    #equation .term:hover, #equation .term.active { background: #ffe0e0; }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="controls">
     <label>n = <span id="nValue">3</span></label>
-    <input type="range" id="slider" min="1" max="8" value="3">
+    <input type="range" id="slider" min="1" max="6" value="3">
   </div>
   <svg id="svg"></svg>
   <div id="equation"></div>
-  <script  src="main.js" type="module"></script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>

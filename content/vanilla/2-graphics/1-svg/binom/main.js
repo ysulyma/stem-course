@@ -3,6 +3,16 @@ const slider = document.getElementById("slider");
 const nValueEl = document.getElementById("nValue");
 const equationEl = document.getElementById("equation");
 const W = 600, H = 400, MARGIN = 60;
+// Soothing 7-color palette for k=0 to k=6
+const COLORS = [
+    "#5b8c85", // teal
+    "#7eb77f", // sage green
+    "#c9a227", // golden
+    "#e07b53", // coral
+    "#b565a7", // orchid
+    "#6a7fdb", // periwinkle
+    "#4a90a4", // steel blue
+];
 function binomial(n, k) {
     if (k > n || k < 0)
         return 0;
@@ -22,9 +32,10 @@ function termTeX(n, k) {
     return s || "1";
 }
 // Generate all 2^n paths, each path is array of 0 (y/flat) or 1 (x/up)
+// Ordered so xxx...x comes first (all 1s), then descending
 function generateAllPaths(n) {
     const results = [];
-    for (let i = 0; i < 1 << n; i++) {
+    for (let i = (1 << n) - 1; i >= 0; i--) {
         const path = [];
         for (let j = n - 1; j >= 0; j--)
             path.push((i >> j) & 1);
@@ -32,13 +43,25 @@ function generateAllPaths(n) {
     }
     return results;
 }
-// Convert path to TeX string like "x^2y" or "xyx" (ungrouped)
+// Convert path to TeX string like "xyx" (ungrouped)
 function pathToTeX(path) {
     return path.map((s) => (s === 1 ? "x" : "y")).join("");
 }
-// Count x's in path (for grouping by k)
+// Count y's in path (for grouping by k)
 function countY(path) {
     return path.filter((s) => s === 0).length;
+}
+// Create SVG path d attribute from a path array
+function pathToD(path, startX, startY, stepX, stepY) {
+    let d = `M ${startX} ${startY}`;
+    let x = startX, y = startY;
+    for (const step of path) {
+        x += stepX;
+        if (step === 1)
+            y -= stepY;
+        d += ` L ${x} ${y}`;
+    }
+    return d;
 }
 function render(n) {
     svg.innerHTML = "";
@@ -49,129 +72,154 @@ function render(n) {
     const stepY = (H - 2 * MARGIN) / n;
     const startX = MARGIN, startY = H - MARGIN;
     const allPaths = generateAllPaths(n);
-    const pathElements = [];
-    // Draw all paths
-    allPaths.forEach((p, idx) => {
-        const pathEl = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        let d = `M ${startX} ${startY}`;
-        let x = startX, y = startY;
-        for (const step of p) {
-            x += stepX;
-            if (step === 1)
-                y -= stepY;
-            d += ` L ${x} ${y}`;
+    // Draw minimal grid: horizontal and diagonal lines forming the lattice
+    // We need n+1 horizontal levels and diagonal connections
+    const gridGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    gridGroup.classList.add("grid");
+    // Draw grid edges - each node (i,j) connects to (i+1,j) [flat] and (i+1,j+1) [up]
+    for (let col = 0; col < n; col++) {
+        for (let row = 0; row <= col; row++) {
+            const x1 = startX + col * stepX;
+            const y1 = startY - row * stepY;
+            // Flat edge (y move): go right
+            const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line1.setAttribute("x1", String(x1));
+            line1.setAttribute("y1", String(y1));
+            line1.setAttribute("x2", String(x1 + stepX));
+            line1.setAttribute("y2", String(y1));
+            line1.classList.add("grid-line");
+            gridGroup.appendChild(line1);
+            // Up edge (x move): go right and up
+            const line2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line2.setAttribute("x1", String(x1));
+            line2.setAttribute("y1", String(y1));
+            line2.setAttribute("x2", String(x1 + stepX));
+            line2.setAttribute("y2", String(y1 - stepY));
+            line2.classList.add("grid-line");
+            gridGroup.appendChild(line2);
         }
-        pathEl.setAttribute("d", d);
-        pathEl.classList.add("path");
-        pathEl.dataset.idx = String(idx);
-        pathEl.dataset.k = String(countY(p));
-        svg.appendChild(pathEl);
-        pathElements.push(pathEl);
-    });
-    // Y-axis labels
+    }
+    svg.appendChild(gridGroup);
+    // Y-axis labels with colors
     for (let k = 0; k <= n; k++) {
         const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
         const yPos = startY - (n - k) * stepY;
         text.setAttribute("x", String(W - MARGIN + 10));
         text.setAttribute("y", String(yPos + 5));
+        text.setAttribute("fill", COLORS[k]);
         text.classList.add("axis-label");
         text.textContent = termTeX(n, k).replace(/\^(\d+)/g, (_, p) => "⁰¹²³⁴⁵⁶⁷⁸⁹"[p] || `^${p}`);
         text.dataset.k = String(k);
         svg.appendChild(text);
     }
-    // Build equation display
+    // Group to hold highlighted paths (added/removed on hover)
+    const highlightGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    highlightGroup.classList.add("highlight-group");
+    svg.appendChild(highlightGroup);
+    // Build equation display as single KaTeX expression
     equationEl.innerHTML = "";
-    const lhs = document.createElement("span");
-    katex.render(`(x + y)^${n} = `, lhs);
-    equationEl.appendChild(lhs);
-    const isSquare = n > 1 && Number.isInteger(Math.sqrt(1 << n));
-    const ungroupedTerms = [];
-    if (isSquare) {
-        // Matrix layout for ungrouped terms
-        const cols = Math.sqrt(1 << n);
-        const grid = document.createElement("div");
-        grid.className = "ungrouped-grid";
-        grid.style.gridTemplateColumns = `repeat(${cols}, auto)`;
-        allPaths.forEach((p, idx) => {
-            const cell = document.createElement("span");
-            cell.className = "ungrouped-term";
-            cell.dataset.idx = String(idx);
-            cell.dataset.k = String(countY(p));
-            katex.render(pathToTeX(p), cell);
-            grid.appendChild(cell);
-            ungroupedTerms.push(cell);
+    let ungroupedTeX;
+    if (n === 1) {
+        const terms = allPaths.map((p, idx) => {
+            const k = countY(p);
+            return `\\htmlClass{ungrouped-term ungrouped-${idx}}{\\color{${COLORS[k]}}{${pathToTeX(p)}}}`;
         });
-        equationEl.appendChild(grid);
+        ungroupedTeX = `\\sum\\left(${terms.join(" + ")}\\right)`;
     }
     else {
-        // Single line for non-square (including n=1)
-        const line = document.createElement("span");
-        line.className = "ungrouped-line";
-        allPaths.forEach((p, idx) => {
-            if (idx > 0)
-                line.appendChild(document.createTextNode(" + "));
-            const span = document.createElement("span");
-            span.className = "ungrouped-term";
-            span.dataset.idx = String(idx);
-            span.dataset.k = String(countY(p));
-            katex.render(pathToTeX(p), span);
-            line.appendChild(span);
-            ungroupedTerms.push(span);
-        });
-        equationEl.appendChild(line);
+        const numRows = 1 << Math.floor(n / 2);
+        const numCols = 1 << Math.ceil(n / 2);
+        const rows = [];
+        for (let r = numRows - 1; r >= 0; r--) {
+            const rowTerms = [];
+            for (let c = numCols - 1; c >= 0; c--) {
+                const idx = r * numCols + c;
+                const k = countY(allPaths[idx]);
+                rowTerms.push(`\\htmlClass{ungrouped-term ungrouped-${idx}}{\\color{${COLORS[k]}}{${pathToTeX(allPaths[idx])}}}`);
+            }
+            rows.push(rowTerms.join(" & "));
+        }
+        ungroupedTeX = `\\sum\\left(\\begin{array}{${"c".repeat(numCols)}}${rows.join(" \\\\ ")}\\end{array}\\right)`;
     }
-    // Second line: grouped expression
-    const grouped = document.createElement("div");
-    grouped.className = "grouped-line";
-    const eq2 = document.createElement("span");
-    katex.render("= ", eq2);
-    grouped.appendChild(eq2);
-    const groupedTerms = [];
+    const groupedTermsTeX = [];
     for (let k = 0; k <= n; k++) {
-        if (k > 0)
-            grouped.appendChild(document.createTextNode(" + "));
-        const span = document.createElement("span");
-        span.className = "grouped-term";
-        span.dataset.k = String(k);
-        katex.render(termTeX(n, k), span);
-        grouped.appendChild(span);
-        groupedTerms.push(span);
+        groupedTermsTeX.push(`\\htmlClass{grouped-term grouped-${k}}{\\color{${COLORS[k]}}{${termTeX(n, k)}}}`);
     }
-    equationEl.appendChild(grouped);
-    // Hover logic
-    function highlightPath(idx) {
-        pathElements.forEach((p, i) => {
-            p.classList.toggle("highlight", idx !== null && String(i) === idx);
-        });
+    const groupedTeX = groupedTermsTeX.join(" + ");
+    let fullTeX;
+    if (n === 1) {
+        fullTeX = `(x + y)^${n} = ${ungroupedTeX} = ${groupedTeX}`;
     }
-    function highlightGroup(k) {
-        pathElements.forEach((p) => {
-            p.classList.toggle("highlight", k !== null && p.dataset.k === k);
+    else {
+        fullTeX = `\\begin{aligned}(x + y)^${n} &= ${ungroupedTeX} \\\\ &= ${groupedTeX}\\end{aligned}`;
+    }
+    katex.render(fullTeX, equationEl, { trust: true });
+    // Hover: draw colored path on top, remove on leave
+    function showPath(idx) {
+        const path = allPaths[idx];
+        const k = countY(path);
+        const pathEl = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        pathEl.setAttribute("d", pathToD(path, startX, startY, stepX, stepY));
+        pathEl.setAttribute("stroke", COLORS[k]);
+        pathEl.classList.add("highlight-path");
+        highlightGroup.appendChild(pathEl);
+    }
+    function showGroup(k) {
+        allPaths.forEach((path, idx) => {
+            if (countY(path) === k) {
+                const pathEl = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                pathEl.setAttribute("d", pathToD(path, startX, startY, stepX, stepY));
+                pathEl.setAttribute("stroke", COLORS[k]);
+                pathEl.classList.add("highlight-path");
+                highlightGroup.appendChild(pathEl);
+            }
         });
-        ungroupedTerms.forEach((el) => {
-            el.classList.toggle("active", k !== null && el.dataset.k === k);
+        // Highlight ungrouped terms
+        allPaths.forEach((p, idx) => {
+            const el = equationEl.querySelector(`.ungrouped-${idx}`);
+            if (el)
+                el.classList.toggle("active", countY(p) === k);
         });
-        groupedTerms.forEach((el) => {
-            el.classList.toggle("active", k !== null && el.dataset.k === k);
-        });
+        // Highlight grouped term
+        for (let i = 0; i <= n; i++) {
+            const el = equationEl.querySelector(`.grouped-${i}`);
+            if (el)
+                el.classList.toggle("active", i === k);
+        }
         svg.querySelectorAll(".axis-label").forEach((el) => {
-            el.classList.toggle("active", k !== null && el.dataset.k === k);
+            el.classList.toggle("active", el.dataset.k === String(k));
         });
     }
-    // Ungrouped terms: hover highlights single path
-    ungroupedTerms.forEach((el) => {
-        el.addEventListener("mouseenter", () => highlightPath(el.dataset.idx));
-        el.addEventListener("mouseleave", () => highlightPath(null));
+    function clearHighlights() {
+        highlightGroup.innerHTML = "";
+        equationEl.querySelectorAll(".active").forEach((el) => {
+            el.classList.remove("active");
+        });
+        svg.querySelectorAll(".axis-label.active").forEach((el) => {
+            el.classList.remove("active");
+        });
+    }
+    // Ungrouped terms: hover shows single path
+    allPaths.forEach((_, idx) => {
+        const el = equationEl.querySelector(`.ungrouped-${idx}`);
+        if (el) {
+            el.addEventListener("mouseenter", () => showPath(idx));
+            el.addEventListener("mouseleave", clearHighlights);
+        }
     });
-    // Grouped terms: hover highlights all matching ungrouped + paths
-    groupedTerms.forEach((el) => {
-        el.addEventListener("mouseenter", () => highlightGroup(el.dataset.k));
-        el.addEventListener("mouseleave", () => highlightGroup(null));
-    });
+    // Grouped terms: hover shows all matching paths
+    for (let k = 0; k <= n; k++) {
+        const el = equationEl.querySelector(`.grouped-${k}`);
+        if (el) {
+            const kVal = k;
+            el.addEventListener("mouseenter", () => showGroup(kVal));
+            el.addEventListener("mouseleave", clearHighlights);
+        }
+    }
     // Axis labels: same as grouped
     svg.querySelectorAll(".axis-label").forEach((el) => {
-        el.addEventListener("mouseenter", () => highlightGroup(el.dataset.k));
-        el.addEventListener("mouseleave", () => highlightGroup(null));
+        el.addEventListener("mouseenter", () => showGroup(parseInt(el.dataset.k)));
+        el.addEventListener("mouseleave", clearHighlights);
     });
 }
 slider.addEventListener("input", () => {
