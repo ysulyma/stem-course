@@ -1,0 +1,39 @@
+# Desmos
+
+Desmos is the most popular and most powerful graphing calculator on the web. Their calculator is also scriptable!
+
+[Desmos docs](https://www.desmos.com/api/v1.11/docs/)
+
+## TypeScript
+
+I have authored types for Desmos that you can use:
+
+```bash
+npm install --save-dev @types/desmos
+```
+
+## Selecting the zoom level
+
+Here's how to get the calculator initialized to a good viewport for your scene. First zoom/pan to your desired viewport, then run the following in the Developer Console:
+
+```js
+var { mathCoordinates } = calculator.graphpaperBounds;
+copy({
+  bottom: mathCoordinates.bottom,
+  left: mathCoordinates.left,
+  right: mathCoordinates.right,
+  top: mathCoordinates.top,
+});
+```
+
+(This assumes you have `calculator` as a global variable). Paste these values into a call to [`GraphingCalculator.setMathBounds`](https://www.desmos.com/api/v1.11/docs/index.html#document-coordinates), like so:
+
+```js
+calculator.setMathBounds({
+  bottom: -0.7973141530854024,
+  left: -1.8302562099415733,
+  right: 3.129546539934864,
+  top: 2.055297545454642,
+});
+```
+
