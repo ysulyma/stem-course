@@ -1,19 +1,28 @@
 {
-	"compilerOptions": {
-		"alwaysStrict": true,
-		"declaration": false,
-		"esModuleInterop": true,
-		"incremental": true,
-		"lib": ["es2022", "dom", "dom.iterable"],
-		"noImplicitAny": true,
-		"noImplicitOverride": false,
-		"noUncheckedIndexedAccess": false,
-		"pretty": true,
-		"removeComments": false,
-		"rewriteRelativeImportExtensions": true,
-		"skipLibCheck": true,
-		"strict": true,
-		"target": "es2022",
-		"verbatimModuleSyntax": true
-	}
+  "compilerOptions": {
+    /* Base Options: */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": false,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": false,
+    "noImplicitOverride": true,
+    /* If transpiling with TypeScript: */
+    "module": "preserve",
+    "sourceMap": true,
+    /* If your code runs in the DOM: */
+    "lib": ["es2022", "dom", "dom.iterable"],
+    // for ES modules
+    "rewriteRelativeImportExtensions": true,
+    "baseUrl": ".", // Base directory for resolving non-relative module names
+    "paths": {
+      "/*": ["./*"]
+    }
+  }
 }

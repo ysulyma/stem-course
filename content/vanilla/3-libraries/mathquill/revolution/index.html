@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Volumes of revolution</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <link href="./style.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css"
+      integrity="sha512-/MlSi6MBnEjKBuoY+vWZE8slTPRlkaKiE46RE0L1jQHodl48ndAOjkVB0GKXHwVmbQhpnVdCTzsjoDGgkbUjyg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- KaTeX -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.28/dist/katex.min.css"
+      integrity="sha384-Wsr4Nh3yrvMf2KCebJchRJoVo1gTU6kcP05uRSh5NV3sj9+a8IomuJoQzf3sMq4T"
+      crossorigin="anonymous"
+    />
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.28/dist/katex.min.js"
+      integrity="sha384-+W9OcrYK2/bD7BmUAk+xeFAyKp0QjyRQUCxeU31dfyTt/FrPsUgaBTLLkVf33qWt"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.28/dist/contrib/auto-render.min.js"
+      integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+      crossorigin="anonymous"
+      onload="renderMathInElement(document.body)"
+    ></script>
+  </head>
+  <body>
+    <div id="three-container"></div>
+    <div id="two-container"></div>
+    <div id="controls">
+      <div id="controls-left">
+        <table>
+          <tbody>
+            <tr>
+              <th>\(f(x) =\)</th>
+              <td>
+                <span id="function-input">cos(x)+sin(x)+2</span>
+              </td>
+            </tr>
+            <tr>
+              <th>\(a\)</th>
+              <td>
+                <input id="input-a" tabindex="2" type="number" value="-2" />
+              </td>
+            </tr>
+            <tr>
+              <th>\(b\)</th>
+              <td>
+                <input id="input-b" tabindex="3" type="number" value="2" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button id="animate">Animate!</button>
+      </div>
+      <div id="controls-right">
+        <table>
+          <tbody>
+            <tr>
+              <th>Show</th>
+              <td>
+                <span id="graph-text">Graph</span>
+                <svg id="toggle-graph" height="25" viewBox="0 0 80 50">
+                  <rect
+                    fill="#00AEFF"
+                    x="2"
+                    y="11"
+                    height="28"
+                    width="76"
+                    rx="12"
+                    ry="12"
+                  />
+                  <circle cx="20" cy="25" r="20" fill="#EEE" />
+                </svg>
+                <span id="disks-text">Disks</span>
+              </td>
+            </tr>
+            <tr>
+              <th># of disks</th>
+              <td>
+                <input
+                  id="slices"
+                  min="1"
+                  tabindex="5"
+                  type="number"
+                  value="10"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>Volume (approx)</th>
+              <td rowspan="2">\({}\)</td>
+            </tr>
+            <tr>
+              <th>Volume (exact<small>ish</small>)</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "bezier-easing": "https://esm.sh/bezier-easing",
+          "three": "https://cdn.jsdelivr.net/npm/three@0.182.0/build/three.module.js",
+          "three/": "https://cdn.jsdelivr.net/npm/three@0.182.0/"
+        }
+      }
+    </script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"
+      integrity="sha512-h9kKZlwV1xrIcr2LwAPZhjlkx+x62mNwuQK5PAu9d3D+JXMNlGx8akZbqpXvp0vA54rz+DrqYVrzUGDMhwKmwQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"
+      integrity="sha512-Qsh05D07P6dURSZn8Qk+j8GI7cEK0OhXleZvTofmucwoDSkBC0juWf1401JdSE8os2kWEezMu7e9mlnszm3yEw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/14.8.1/math.min.js"
+      integrity="sha512-ix7qh7Gu4nTiTEktF0EWQAsn0cGwuiDJwuxdX4GGpivcx+PxYdJ/j0nlWyUTONg2bOQV98vk+x+Ee6zYpB5wyA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/tex-math-parser"></script>
+
+    <script src="./interface.js" type="module"></script>
+  </body>
+</html>

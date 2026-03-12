@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Plot a function</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 1em;
+      }
+
+      #math-field {
+        border: 1px solid #eee;
+        min-width: 4em;
+      }
+
+      #latex {
+        background-color: light-dark(#eee, #444);
+        border-radius: 2px;
+        font-family: monospace;
+
+        &:not(:empty) {
+          padding: 2px 4px;
+        }
+      }
+    </style>
+
+    <!-- MathQuill -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css"
+      integrity="sha512-/MlSi6MBnEjKBuoY+vWZE8slTPRlkaKiE46RE0L1jQHodl48ndAOjkVB0GKXHwVmbQhpnVdCTzsjoDGgkbUjyg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div id="chart"></div>
+    <div>Function: <span id="math-field"></span></div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"
+      integrity="sha512-h9kKZlwV1xrIcr2LwAPZhjlkx+x62mNwuQK5PAu9d3D+JXMNlGx8akZbqpXvp0vA54rz+DrqYVrzUGDMhwKmwQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"
+      integrity="sha512-Qsh05D07P6dURSZn8Qk+j8GI7cEK0OhXleZvTofmucwoDSkBC0juWf1401JdSE8os2kWEezMu7e9mlnszm3yEw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "@observablehq/plot": "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm"
+        }
+      }
+    </script>
+
+    <script src="./script.js" type="module"></script>
+  </body>
+</html>

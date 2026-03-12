@@ -32,9 +32,9 @@ aside {
 }
 
 #function {
-	border-bottom-right-radius: var(--radius);
 	left: 0;
 	padding: 0 1em;
+	border-bottom-right-radius: var(--radius);
 }
 
 #controls {

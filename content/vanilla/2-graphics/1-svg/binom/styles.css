@@ -7,45 +7,45 @@ body {
 
 .controls {
   margin-bottom: 1rem;
-}
 
-.controls label {
-  font-weight: bold;
-}
+  label {
+    font-weight: bold;
+  }
 
-#slider {
-  width: 200px;
-  margin-left: 0.5rem;
-}
+  #slider {
+    width: 200px;
+    margin-left: 0.5rem;
+  }
 
-#nValue {
-  margin-left: 0.5rem;
+  #nValue {
+    margin-left: 0.5rem;
+  }
 }
 
 svg {
   display: block;
   margin: 1rem 0;
-}
 
-.grid-line {
-  stroke: #ddd;
-  stroke-width: 1.5;
-  fill: none;
-}
+  .grid-line {
+    stroke: #ddd;
+    stroke-width: 1.5;
+    fill: none;
+  }
 
-.highlight-path {
-  stroke-width: 3;
-  fill: none;
-}
+  .highlight-path {
+    stroke-width: 3;
+    fill: none;
+  }
 
-.axis-label {
-  font-size: 14px;
-  cursor: pointer;
-}
+  .axis-label {
+    font-size: 14px;
+    cursor: pointer;
 
-.axis-label:hover,
-.axis-label.active {
-  font-weight: bold;
+    &:hover,
+    &.active {
+      font-weight: bold;
+    }
+  }
 }
 
 #equation {
@@ -53,31 +53,20 @@ svg {
   margin-top: 1rem;
 }
 
-.ungrouped-grid {
-  display: inline-grid;
-  gap: 0.3rem 1rem;
-  vertical-align: middle;
-  margin: 0 0.5rem;
-}
-
-.ungrouped-line {
-  display: inline;
-}
-
-.katex .vlist {
-  pointer-events: none;
+.katex {
+  .vlist {
+    pointer-events: none;
+  }
 }
 
 .ungrouped-term,
 .grouped-term {
   cursor: pointer;
   pointer-events: auto;
-}
 
-.ungrouped-term:hover,
-.ungrouped-term.active,
-.grouped-term:hover,
-.grouped-term.active {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
+  &:hover,
+  &.active {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+  }
 }

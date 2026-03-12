@@ -8,6 +8,7 @@
   </head>
   <body>
     <main>
+      <h1><var>k</var>-nearest neighbors</h1>
       <div id="controls">
         <button
           aria-checked
@@ -16,22 +17,27 @@
           role="radio"
           style="background-color: red"
           type="button"
-        />
+        ></button>
         <button
           class="color-selection"
           data-color="green"
           role="radio"
           style="background-color: green"
           type="button"
-        />
+        ></button>
         <button
           class="color-selection"
           data-color="blue"
           role="radio"
           style="background-color: blue"
           type="button"
-        />
+        ></button>
         <button id="clear" type="button">Clear</button>
+        <div id="set-k">
+          <label for="input-k"><var>k</var></label>
+          <input id="input-k" type="range" min="1" max="5" name="k" value="1" />
+          <span id="value-k">1</span>
+        </div>
       </div>
       <div class="canvas-container">
         <canvas id="layer-dots"></canvas>

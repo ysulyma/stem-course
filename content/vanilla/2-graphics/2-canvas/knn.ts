@@ -17,15 +17,18 @@ const config = {
 
 interface State {
 	color: string;
+	k: number;
 	points: ColoredPoint[];
 }
 
 /* state */
 const state: State = {
 	color: "red",
+	k: 1,
 	points: [],
 };
 
+/** add selection functionality to the buttons */
 function wireUpButtons() {
 	for (const btn of $$(".color-selection") as HTMLButtonElement[]) {
 		const color = btn.dataset.color;
@@ -35,6 +38,7 @@ function wireUpButtons() {
 		}
 		btn.addEventListener("click", () => {
 			state.color = btn.dataset.color!;
+			$("#cursor circle")?.setAttribute("fill", state.color);
 			redrawButtons();
 		});
 	}
@@ -48,13 +52,28 @@ function wireUpButtons() {
 	}
 }
 
+function wireUpKSelector() {
+	const kInput = $("#input-k") as HTMLInputElement;
+	const kValue = $("#value-k") as HTMLInputElement;
+
+	state.k = parseInt(kInput.value);
+	kValue.textContent = String(state.k);
+
+	kInput.addEventListener("input", () => {
+		state.k = parseInt(kInput.value);
+		kValue.textContent = String(state.k);
+
+		redrawPoints();
+	});
+}
+
 function wireUpCanvas() {
 	const drawingCanvas = $("#layer-drawing") as HTMLCanvasElement;
+	let rect = drawingCanvas.getBoundingClientRect();
+
 	const ctx = drawingCanvas.getContext("2d")!;
-	console.log(drawingCanvas);
 
 	drawingCanvas.addEventListener("click", (e) => {
-		console.log(e);
 		// convert event coordinates to canvas coordinates
 		const rect = drawingCanvas.getBoundingClientRect();
 
@@ -67,10 +86,11 @@ function wireUpCanvas() {
 		ctx.fillStyle = state.color;
 		ctx.arc(x, y, config.drawRadius, 0, 2 * Math.PI);
 		ctx.fill();
+
+		redrawPoints();
 	});
 
 	drawingCanvas.addEventListener("mousemove", (e) => {
-		console.log(e);
 		// convert event coordinates to canvas coordinates
 		const rect = drawingCanvas.getBoundingClientRect();
 
@@ -81,14 +101,24 @@ function wireUpCanvas() {
 	});
 }
 
+function wireUpClear() {
+	$("#clear")?.addEventListener("click", () => {
+		state.points = [];
+		redrawPoints();
+	});
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 	wireUpButtons();
 	wireUpCanvas();
 	resizeCanvases();
+	wireUpKSelector();
+	wireUpClear();
 
 	window.addEventListener("resize", resizeCanvases);
 });
 
+/** resize all canvases when the window is resized */
 function resizeCanvases() {
 	for (const canvas of $$("canvas") as HTMLCanvasElement[]) {
 		const rect = canvas.getBoundingClientRect();
@@ -98,149 +128,145 @@ function resizeCanvases() {
 		canvas.height = height;
 		canvas.width = width;
 	}
+
+	redrawPoints();
 }
 
+/** move the cursor dot */
 function drawCursor(x: number, y: number) {
 	const cursor = $("#cursor") as SVGSVGElement;
 
 	Object.assign(cursor.style, {
-		left: `${x}px`,
-		top: `${y}px`,
+		translate: `calc(${x}px - 50%) calc(${y}px - 50%)`,
 	});
 }
 
-// export function ClientContent() {
-//   const [selectedColor, setColor] = useState<Color>("red");
-//   const canvas = useRef<CanvasRef>(null);
-//
-//   return (
-//     <div className="h-screen w-screen rounded-md p-2">
-//       <div className="flex items-center gap-2">
-//         {COLORS.map((color) => (
-//           // biome-ignore lint/a11y/useSemanticElements: no it can't
-//           <button
-//             aria-checked={color === selectedColor}
-//             role="radio"
-//             className="h-6 w-6 border border-solid opacity-30 aria-checked:opacity-100"
-//             key={color}
-//
-// const Canvas = forwardRef<CanvasRef, CanvasProps>(function Canvas(
-//   { color },
-//   ref,
-// ) {
-//   // canvases
-//   const dotsLayer = useRef<HTMLCanvasElement>(null);
-//   const drawingLayer = useRef<HTMLCanvasElement>(null);
-//   useSetCanvasSize(dotsLayer);
-//   useSetCanvasSize(drawingLayer);
-//
-//   /** Points drawn on the canvas */
-//   const points = useRef<ColoredPoint[]>([]);
-//
-//   /** Redraw the KNN canvas */
-//   const redrawKNN = useCallback(() => {
-//     const dotsCanvas = dotsLayer.current;
-//     if (!dotsCanvas) return;
-//
-//     const ctx = dotsCanvas.getContext("2d");
-//     if (!ctx) return;
-//
-//     console.log(points);
-//
-//     // clear the canvas
-//     ctx.clearRect(0, 0, dotsCanvas.width, dotsCanvas.height);
-//
-//     // early exit if there are no points
-//     if (points.current.length === 0) return;
-//
-//     // draw the points
-//     for (
-//       let x = config.granularity;
-//       x < dotsCanvas.width;
-//       x += config.granularity
-//     ) {
-//       for (
-//         let y = config.granularity;
-//         y < dotsCanvas.height;
-//         y += config.granularity
-//       ) {
-//         const nearestNeighbor = findNearestNeighbor({ x, y }, points.current);
-//
-//         ctx.beginPath();
-//         ctx.fillStyle = nearestNeighbor.color;
-//         ctx.arc(x, y, config.dotRadius, 0, TURN);
-//         ctx.fill();
-//       }
-//     }
-//   }, []);
-//
-//
-//   // component api
-//   useImperativeHandle(ref, () => ({
-//     clear: () => {
-//       // reset the points
-//       points.current = [];
-//
-//       // clear the dots canvas
-//       redrawKNN();
-//
-//       // clear the drawing canvas
-//       const drawingCanvas = drawingLayer.current;
-//       if (!drawingCanvas) return;
-//
-//       drawingCanvas
-//         .getContext("2d")
-//         ?.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-//     },
-//   }));
-//
-//   return (
-//     <div className="relative h-80 w-full border border-gray-600 border-solid">
-//       <canvas
-//         className="pointer-events-none absolute h-full w-full opacity-50"
-//         ref={dotsLayer}
-//       />
-//       <canvas
-//         className="absolute h-full w-full"
-//         onPointerDown={addPoint}
-//         ref={drawingLayer}
-//       />
-//     </div>
-//   );
-// });
-//
-// /**
-//  * Find the nearest neighbor of a point in a set of points
-//  * @param pt - The point to find the nearest neighbor of
-//  * @param points - The set of points to find the nearest neighbor in
-//  * @returns The nearest neighbor of the point
-//  */
-// function findNearestNeighbor<T extends Point>(pt: Point, points: T[]): T {
-//   let minDistance = Number.POSITIVE_INFINITY;
-//
-//   let nearestNeighbor: T | undefined;
-//
-//   for (const p of points) {
-//     const distance = Math.hypot(pt.x - p.x, pt.y - p.y);
-//
-//     if (distance < minDistance) {
-//       minDistance = distance;
-//       nearestNeighbor = p;
-//     }
-//   }
-//
-//   if (!nearestNeighbor) {
-//     throw new Error("Empty array of points");
-//   }
-//
-//   return nearestNeighbor;
-// }
-//
-//
-//
-function $(selector: string, target = document) {
-	return target.querySelector(selector);
+/** redraw the KNN canvas */
+function redrawPoints() {
+	const dotsCanvas = $("#layer-dots") as HTMLCanvasElement;
+	const ctx = dotsCanvas.getContext("2d");
+
+	if (!ctx) return;
+
+	// clear the canvas
+	ctx.clearRect(0, 0, dotsCanvas.width, dotsCanvas.height);
+
+	// early exit if no points
+	if (state.points.length === 0) return;
+
+	console.log(findNearestNeighbors({ x: 1500, y: 300 }, state.points, state.k));
+
+	// draw the points
+	for (
+		let x = config.granularity;
+		x < dotsCanvas.width;
+		x += config.granularity
+	) {
+		for (
+			let y = config.granularity;
+			y < dotsCanvas.height;
+			y += config.granularity
+		) {
+			const nearestNeighbors = findNearestNeighbors(
+				{ x, y },
+				state.points,
+				state.k,
+			);
+
+			const colorCounts = nearestNeighbors.reduce(
+				(acc, curr) => {
+					if (!acc[curr.color]) {
+						acc[curr.color] = 0;
+					}
+					acc[curr.color]++;
+					return acc;
+				},
+				{} as Record<string, number>,
+			);
+
+			let winner;
+			let max = -1;
+
+			for (const color in colorCounts) {
+				const count = colorCounts[color];
+				if (count > max) {
+					max = count;
+					winner = color;
+				}
+			}
+
+			ctx.beginPath();
+			ctx.fillStyle = winner;
+			ctx.arc(x, y, config.dotRadius, 0, TURN);
+			ctx.fill();
+		}
+	}
 }
+
+/**
+ * Find the nearest neighbor of a point in a set of points
+ * @param pt - The point to find the nearest neighbor of
+ * @param points - The set of points to find the nearest neighbor in
+ * @returns The nearest neighbor of the point
+ */
+function findNearestNeighbors<T extends Point>(
+	pt: Point,
+	points: T[],
+	k: number,
+): T[] {
+	const log = (...args) => {
+		if (pt.x === 1500 && pt.y === 300) {
+			console.log(...args);
+		}
+	};
+	let distanceCutoff = Number.POSITIVE_INFINITY;
+
+	let nearestNeighborsWithDistances: [T, number][] = [];
+
+	for (const p of points) {
+		const distance = Math.hypot(pt.x - p.x, pt.y - p.y);
+
+		if (nearestNeighborsWithDistances.length < k) {
+			let closerThanExisting = false;
+			// figure out where to insert it
+			for (let i = 0; i < nearestNeighborsWithDistances.length; ++i) {
+				const otherDistance = nearestNeighborsWithDistances[i][1];
+				if (distance <= otherDistance) {
+					closerThanExisting = true;
+					nearestNeighborsWithDistances.splice(i, 0, [p, distance]);
+					break;
+				}
+			}
+			if (!closerThanExisting) {
+				nearestNeighborsWithDistances.push([p, distance]);
+			}
+			distanceCutoff = nearestNeighborsWithDistances.at(-1)[1];
+			log({
+				closerThanExisting,
+				distanceCutoff,
+				nearestNeighborsWithDistances: nearestNeighborsWithDistances.slice(),
+			});
+		} else {
+			if (distance < distanceCutoff) {
+				// figure out where to insert it
+				for (let i = 0; i < k; ++i) {
+					const otherDistance = nearestNeighborsWithDistances[i][1];
+					if (distance <= otherDistance) {
+						nearestNeighborsWithDistances.splice(i, 0, [p, distance]);
+						nearestNeighborsWithDistances.pop();
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	log({ nearestNeighborsWithDistances });
+
+	return nearestNeighborsWithDistances.map(([pt, _dist]) => pt);
+}
+
+
 
 function $$(selector: string, target = document) {
 	return Array.from(target.querySelectorAll(selector));

@@ -5,6 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Binomial Theorem Visualization</title>
 
+    <!-- OpenGraph tags -->
+    <meta
+      property="og:description"
+      content="Visualize the binomial theorem"
+    />
+    <meta
+      property="og:image"
+      content="https://stem-course.liqvidjs.org/content/vanilla/2-graphics/1-svg/binom/opengraph.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="640" />
+    <meta property="og:image:height" content="369" />
+    <meta
+      property="og:image:alt"
+      content="Visualization of the different terms in the binomial theorem as paths"
+    />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Binomial Theorem Visualization" />
+    <meta
+      name="twitter:description"
+      content="Visualize the binomial theorem"
+    />
+    <meta
+      name="twitter:image"
+      content="https://stem-course.liqvidjs.org/content/vanilla/2-graphics/1-svg/binom/twitter.png"
+    />
+    <meta
+      name="twitter:url"
+      content="https://stem-course.liqvidjs.org/content/vanilla/2-graphics/1-svg/binom/"
+    />
+
     <!-- KaTeX -->
     <link
       rel="stylesheet"
@@ -37,6 +71,7 @@
     <input type="range" id="slider" min="1" max="6" value="3">
   </div>
   <svg id="svg"></svg>
+  <p>Hover over a term to see the corresponding path</p>
   <div id="equation"></div>
   <script type="module" src="main.js"></script>
 </body>
