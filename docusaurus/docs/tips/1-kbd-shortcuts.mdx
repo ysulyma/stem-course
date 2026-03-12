@@ -17,9 +17,10 @@ These shortcuts work in most apps.
   <TabItem value="linux">
     <KbdTable
       shortcuts={[
+        { key: "Alt+Tab", action: "Switch application" },
+        { key: "Alt+F4", action: "Quit" },
         { key: "Ctrl+N", action: "New document" },
         { key: "Ctrl+O", action: "Open" },
-        { key: "Alt+F4", action: "Quit" },
         { key: "Ctrl+S", action: "Save" },
         { key: "Ctrl+W", action: "Close window" },
       ]}
@@ -28,6 +29,7 @@ These shortcuts work in most apps.
   <TabItem value="mac">
     <KbdTable
       shortcuts={[
+        { key: "mac(Cmd+Tab)", action: "Switch application" },
         { key: "mac(Cmd+H)", action: "Hide window" },
         { key: "mac(Cmd+M)", action: "Minimize window" },
         { key: "mac(Cmd+N)", action: "New document" },
@@ -44,7 +46,7 @@ These shortcuts work in most apps.
     `System Settings` &gt; `Keyboard` &gt; `Keyboard Shortcuts…` &gt; `Modifier Keys`:
 
     <ReactPlayer
-      loop
+      controls
       muted
       src="/videos/en-US/remap-escape.mov"
       style={{ aspectRatio: "1426/1252", height: "400px", width: "auto" }}
@@ -57,9 +59,10 @@ These shortcuts work in most apps.
   <TabItem value="windows">
     <KbdTable
       shortcuts={[
+        { key: "Alt+Tab", action: "Switch application" },
+        { key: "Alt+F4", action: "Quit" },
         { key: "Ctrl+N", action: "New document" },
         { key: "Ctrl+O", action: "Open" },
-        { key: "Alt+F4", action: "Quit" },
         { key: "Ctrl+S", action: "Save" },
         { key: "Ctrl+W", action: "Close window" },
       ]}
