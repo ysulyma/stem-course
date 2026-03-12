@@ -1,6 +1,6 @@
 import ReactPlayer from "react-player";
 import TabItem from "@theme/TabItem";
-import { BrowserTabs, Kbd  } from "@site/src/theme/MDN";
+import { BrowserTabs, Kbd } from "@site/src/theme/MDN";
 
 # Mobile
 
@@ -15,19 +15,21 @@ The developer tools on your desktop browser allow you to preview your page as if
     [Chrome docs on simulating mobile devices](https://developer.chrome.com/docs/devtools/device-mode)
 
     First open your DevTools with the keyboard shortcut <Kbd osVariants={{linux: "Ctrl+Shift+I", mac: "Alt+Cmd+I"}} /> (toolbar: **View** &gt; **Developer** &gt; **Developer Tools**). Then press <Kbd osVariants={{linux: "Ctrl+Shift+M", mac: "Cmd+Shift+M"}} /> (or click the second icon from the left) to toggle the device toolbar.
+
   </TabItem>
   <TabItem value="firefox">
     [Firefox Responsive Design Mode docs](https://firefox-source-docs.mozilla.org/devtools-user/responsive_design_mode/)
 
     You can open Responsive Design Mode with the keyboard shortcut <Kbd osVariants={{linux: "Ctrl+Shift+M", mac: "Cmd+Alt+M"}}/>, or from the toolbar via **Tools** &gt; **Browser Tools** &gt; **Responsive Design Mode**).
+
   </TabItem>
   <TabItem value="safari">
     [Apple Responsive Design Mode docs](https://developer.apple.com/documentation/safari-developer-tools/responsive-design-mode)
 
     You can open Responsive Design Mode with the keyboard shortcut <Kbd shortcut="mac(Ctrl+Cmd+R)"/>, or from the toolbar via **Develop** &gt; **Enter Responsive Design Mode**.
+
   </TabItem>
 </BrowserTabs>
-
 
 ## CSS for mobile
 
@@ -86,15 +88,16 @@ The pixel values used above are called **breakpoints**. Since there is such a wi
 
 While Responsive Design Mode is sufficient for most purposes, you still want to test on an actual device (especially older devices). Here is how to connect your developer tools to a mobile browser.
 
-### iPhone / iPad
+### Connecting to localhost from a mobile device
 
-[Apple docs on inspecting iOS and iPadOS](https://developer.apple.com/documentation/safari-developer-tools/inspecting-ios)
+If your site is already published, you can just visit its web address on your mobile device. But for live-debugging, you want to give your mobile device access to your computer's `localhost` server. Here are the steps for doing so.
 
 1. Plug your iPhone into your laptop via USB.
 
 2. Make sure your iPhone and laptop are connected to the same Wi-Fi network. **You may also need to disable VPNs**.
 
-3. Get your local IP address by going into **System Settings** &gt; **Wi-Fi** &gt; **Details** &gt; **TCP/IP**:  
+3. Get your local IP address by going into **System Settings** &gt; **Wi-Fi** &gt; **Details** &gt; **TCP/IP**:
+
    <ReactPlayer
      controls
      muted
@@ -104,6 +107,20 @@ While Responsive Design Mode is sufficient for most purposes, you still want to 
 
 4. Enter that IP address into your local device, along with the port. For example, if you access your local server as `http://localhost:3000` on your laptop, and your laptop's local IP address (from the previous step) is `192.168.0.33`, you would enter `http://192.168.0.33:3000` on your mobile device.
 
-5. Open **Safari** on your computer (other browsers will not work). Connect to your device from the **Develop** menu.
+5. Follow the device-specific instructions below for accessing the developer tools.
+
+### iPhone / iPad
+
+[Apple docs on inspecting iOS and iPadOS](https://developer.apple.com/documentation/safari-developer-tools/inspecting-ios)
+
+5. Open **Safari** on your computer (other browsers will not work). Connect to your device from the **Develop** menu. Now you can use the developer tools to inspect elements, log to the console, and so on.
 
 ### Android
+
+[Google docs on debugging Android devices](https://developer.chrome.com/docs/devtools/remote-debugging)
+
+5. On your Android device, [follow these instructions](https://developer.android.com/studio/debug/dev-options.html) to enable developer options.
+
+6. On your Android device, go **Settings** &gt; **Developer options** and enable **USB debugging**.
+
+7. Open **Google Chrome** on your computer (Firefox/Safari will not work). Go to `chrome://inspect#devices`. You should see your device listed there. If not, you may need to try with a different USB cable.
