@@ -1,0 +1,109 @@
+import ReactPlayer from "react-player";
+import TabItem from "@theme/TabItem";
+import { BrowserTabs, Kbd  } from "@site/src/theme/MDN";
+
+# Mobile
+
+Mobile traffic overtook desktop traffic in October 2016; as of 2026, approximately 2/3 of website traffic comes from mobile devices, compared to 1/3 from desktop browsers.
+
+## Mobile preview
+
+The developer tools on your desktop browser allow you to preview your page as if it were being viewed in a mobile browser. This is sufficient to handle ~90% of mobile issues.
+
+<BrowserTabs>
+  <TabItem value="chrome">
+    [Chrome docs on simulating mobile devices](https://developer.chrome.com/docs/devtools/device-mode)
+
+    First open your DevTools with the keyboard shortcut <Kbd osVariants={{linux: "Ctrl+Shift+I", mac: "Alt+Cmd+I"}} /> (toolbar: **View** &gt; **Developer** &gt; **Developer Tools**). Then press <Kbd osVariants={{linux: "Ctrl+Shift+M", mac: "Cmd+Shift+M"}} /> (or click the second icon from the left) to toggle the device toolbar.
+  </TabItem>
+  <TabItem value="firefox">
+    [Firefox Responsive Design Mode docs](https://firefox-source-docs.mozilla.org/devtools-user/responsive_design_mode/)
+
+    You can open Responsive Design Mode with the keyboard shortcut <Kbd osVariants={{linux: "Ctrl+Shift+M", mac: "Cmd+Alt+M"}}/>, or from the toolbar via **Tools** &gt; **Browser Tools** &gt; **Responsive Design Mode**).
+  </TabItem>
+  <TabItem value="safari">
+    [Apple Responsive Design Mode docs](https://developer.apple.com/documentation/safari-developer-tools/responsive-design-mode)
+
+    You can open Responsive Design Mode with the keyboard shortcut <Kbd shortcut="mac(Ctrl+Cmd+R)"/>, or from the toolbar via **Develop** &gt; **Enter Responsive Design Mode**.
+  </TabItem>
+</BrowserTabs>
+
+
+## CSS for mobile
+
+### Media queries
+
+[Media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Media_queries/Using) let you selectively apply CSS styles depending on properties of the user's device. The relevant ones for mobile design are [`width`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/width), [`height`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/height), and [`orientation`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/orientation).
+
+```css
+@media (width <= 480px) {
+  /* styles only for small smartphones */
+}
+
+@media (width >= 481px) {
+  /* styles for tablets/laptops/desktop */
+}
+
+@media (481px <= width <= 768) {
+  /* styles for tablets only */
+}
+
+@media (width >= 1280px) {
+  /* styles only for large desktops */
+}
+```
+
+The pixel values used above are called **breakpoints**. Since there is such a wide variety of mobile devices, there is no standard for these values. Some suggested values are listed below, but they may need to be adjusted depending on your design.
+
+<table>
+  <thead>
+    <tr>
+      <th>Device</th>
+      <th>Width (px)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Small smartphones</th>
+      <td>0–480</td>
+    </tr>
+    <tr>
+      <th>Tablets, large smartphones</th>
+      <td>481–768</td>
+    </tr>
+    <tr>
+      <th>Laptops, large tablets in landscape</th>
+      <td>769–1279</td>
+    </tr>
+    <tr>
+      <th>Large laptops, desktops</th>
+      <td>1280+</td>
+    </tr>
+  </tbody>
+</table>
+
+## Debugging real devices
+
+While Responsive Design Mode is sufficient for most purposes, you still want to test on an actual device (especially older devices). Here is how to connect your developer tools to a mobile browser.
+
+### iPhone / iPad
+
+[Apple docs on inspecting iOS and iPadOS](https://developer.apple.com/documentation/safari-developer-tools/inspecting-ios)
+
+1. Plug your iPhone into your laptop via USB.
+
+2. Make sure your iPhone and laptop are connected to the same Wi-Fi network. **You may also need to disable VPNs**.
+
+3. Get your local IP address by going into **System Settings** &gt; **Wi-Fi** &gt; **Details** &gt; **TCP/IP**:  
+   <ReactPlayer
+     controls
+     muted
+     src="/videos/en-US/get-local-ip.mov"
+     style={{ aspectRatio: "1434/1254", height: "400px", width: "auto" }}
+   />
+
+4. Enter that IP address into your local device, along with the port. For example, if you access your local server as `http://localhost:3000` on your laptop, and your laptop's local IP address (from the previous step) is `192.168.0.33`, you would enter `http://192.168.0.33:3000` on your mobile device.
+
+5. Open **Safari** on your computer (other browsers will not work). Connect to your device from the **Develop** menu.
+
+### Android
