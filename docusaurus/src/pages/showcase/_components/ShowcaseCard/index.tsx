@@ -7,7 +7,12 @@
 
 import Link from "@docusaurus/Link";
 import Translate from "@docusaurus/Translate";
-import { TagList, Tags, type TagType, type User } from "@site/src/data/users";
+import {
+	type ShowcaseProject,
+	TagList,
+	Tags,
+	type TagType,
+} from "@site/src/data/projects";
 import { sortBy } from "@site/src/utils/jsUtils";
 import Heading from "@theme/Heading";
 import Image from "@theme/IdealImage";
@@ -52,7 +57,7 @@ function ShowcaseCardTag({ tags }: { tags: TagType[] }) {
 	);
 }
 
-function ShowcaseCard({ user }: { user: User }) {
+function ShowcaseCard({ user }: { user: ShowcaseProject }) {
 	return (
 		<li className="card shadow--md" key={user.title}>
 			<div className={clsx("card__image", styles.showcaseCardImage)}>

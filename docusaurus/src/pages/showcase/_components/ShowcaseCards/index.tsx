@@ -6,7 +6,7 @@
  */
 
 import Translate from "@docusaurus/Translate";
-import { sortedUsers, type User } from "@site/src/data/users";
+import { type ShowcaseProject, sortedUsers } from "@site/src/data/projects";
 import Heading from "@theme/Heading";
 import clsx from "clsx";
 import type { ReactNode } from "react";
@@ -50,7 +50,13 @@ function HeadingAllSites() {
 	);
 }
 
-function CardList({ heading, items }: { heading?: ReactNode; items: User[] }) {
+function CardList({
+	heading,
+	items,
+}: {
+	heading?: ReactNode;
+	items: ShowcaseProject[];
+}) {
 	return (
 		<div className="container">
 			{heading}

@@ -11,8 +11,8 @@ import {
 	useQueryString,
 	useQueryStringList,
 } from "@docusaurus/theme-common";
-import type { TagType, User } from "@site/src/data/users";
-import { sortedUsers } from "@site/src/data/users";
+import type { ShowcaseProject, TagType } from "@site/src/data/projects";
+import { sortedUsers } from "@site/src/data/projects";
 import { useCallback, useMemo } from "react";
 
 export function useSearchName() {
@@ -41,7 +41,7 @@ function filterUsers({
 	operator,
 	searchName,
 }: {
-	users: User[];
+	users: ShowcaseProject[];
 	tags: TagType[];
 	operator: Operator;
 	searchName: string | null;

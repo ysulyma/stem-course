@@ -1,6 +1,11 @@
 # future content
-docs/react
 docs/liqvid
+
+# OS X
+.DS_Store
+
+*.js
+*.js.map
 
 # i18n
 i18n/de

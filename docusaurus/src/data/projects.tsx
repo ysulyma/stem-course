@@ -40,11 +40,31 @@ import { sortBy } from "@site/src/utils/jsUtils";
 // We'll remove inappropriate tags, but it's less likely that we add tags.
 export type TagType =
 	// DO NOT USE THIS TAG: we choose sites to add to favorites
-	"favorite" | "2d" | "3d" | "audio" | "react" | "vanilla";
+	"favorite" | "canvas" | "svg" | "3d" | "audio" | "react" | "vanilla";
 
 // Add sites to this list
 // prettier-ignore
-const Users: User[] = [
+const demos: ShowcaseProject[] = [
+	{
+		description: "Visualization of the binomial theorem",
+		preview: require("./showcase/binom.png"),
+		source:
+			"https://github.com/ysulyma/stem-course/tree/main/content/vanilla/2-graphics/1-svg/binom",
+		tags: ["vanilla", "svg"],
+		title: "Binomial theorem",
+		website:
+			"https://vanilla.stem-course.liqvidjs.org/2-graphics/1-svg/binom.html",
+	},
+	{
+		description: "Visualize the kNN (k-nearest neighbors) algorithm",
+		preview: require("./showcase/knn.png"),
+		source:
+			"https://github.com/ysulyma/stem-course/tree/main/content/vanilla/2-graphics/2-canvas/knn",
+		tags: ["vanilla", "canvas"],
+		title: "k-nearest neighbors",
+		website:
+			"https://vanilla.stem-course.liqvidjs.org/2-graphics/2-canvas/knn.html",
+	},
 	{
 		description: "See numbers written in different bases",
 		preview: require("./showcase/bases-table.png"),
@@ -52,7 +72,8 @@ const Users: User[] = [
 			"https://github.com/ysulyma/stem-course/tree/main/content/vanilla/1-fundamentals/3-js/bases",
 		tags: ["vanilla"],
 		title: "Number bases",
-		website: "/content/vanilla/1-fundamentals/3-js/bases/",
+		website:
+			"https://vanilla.stem-course.liqvidjs.org/1-fundamentals/3-js/bases/",
 	},
 	{
 		description: "Hear the graph of a 3D function",
@@ -61,11 +82,11 @@ const Users: User[] = [
 			"https://github.com/ysulyma/stem-course/tree/main/content/framework/app/audio-graph-3d",
 		tags: ["3d", "audio", "react"],
 		title: "Graph audiation",
-		website: "/content/framework/audio-graph-3d.html",
+		website: "https://framework.stem-course.liqvidjs.org/audio-graph-3d.html",
 	},
 ];
 
-export type User = {
+export type ShowcaseProject = {
 	title: string;
 	description: string;
 	preview: string | null; // null = use our serverless screenshot service
@@ -98,13 +119,21 @@ export const Tags: { [type in TagType]: Tag } = {
 		}),
 		label: translate({ message: "React" }),
 	},
-	"2d": {
+	svg: {
 		color: "#39ca30",
 		description: translate({
 			id: "showcase.tag.opensource.description",
-			message: "2D graphics (SVG or Canvas)",
+			message: "2D graphics with SVG",
 		}),
-		label: translate({ message: "2D" }),
+		label: translate({ message: "2D (SVG)" }),
+	},
+	canvas: {
+		color: "purple",
+		description: translate({
+			id: "showcase.tag.opensource.description",
+			message: "2D graphics with Canvas",
+		}),
+		label: translate({ message: "2D (Canvas)" }),
 	},
 
 	"3d": {
@@ -137,7 +166,7 @@ export const Tags: { [type in TagType]: Tag } = {
 
 export const TagList = Object.keys(Tags) as TagType[];
 function sortUsers() {
-	let result = Users;
+	let result = demos;
 	// Sort by site name
 	result = sortBy(result, (user) => user.title.toLowerCase());
 	// Sort by favorite tag, favorites first

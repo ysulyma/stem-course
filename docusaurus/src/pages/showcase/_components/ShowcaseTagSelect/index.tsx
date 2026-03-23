@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { TagType } from "@site/src/data/users";
+import type { TagType } from "@site/src/data/projects";
 import React, {
 	type ComponentProps,
 	type ReactElement,

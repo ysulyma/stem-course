@@ -6,7 +6,7 @@
  */
 
 import Translate from "@docusaurus/Translate";
-import { TagList, Tags, type TagType } from "@site/src/data/users";
+import { TagList, Tags, type TagType } from "@site/src/data/projects";
 import FavoriteIcon from "@site/src/pages/showcase/_components/FavoriteIcon";
 import Heading from "@theme/Heading";
 import clsx from "clsx";
