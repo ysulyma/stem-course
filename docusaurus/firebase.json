@@ -1,6 +1,19 @@
 {
-	"hosting": {
-		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-		"public": "build"
-	}
+	"hosting": [
+		{
+			"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+			"public": "build",
+			"target": "main"
+		},
+		{
+			"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+			"public": "./static/content/vanilla",
+			"target": "vanilla"
+		},
+		{
+			"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+			"public": "./static/content/framework",
+			"target": "framework"
+		}
+	]
 }

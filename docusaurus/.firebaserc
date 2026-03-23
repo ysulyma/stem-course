@@ -1,0 +1,19 @@
+{
+  "etags": {},
+  "projects": {},
+  "targets": {
+    "stem-course": {
+      "hosting": {
+        "framework": [
+          "stem-course-content-framework"
+        ],
+        "main": [
+          "stem-course"
+        ],
+        "vanilla": [
+          "stem-course-content-vanilla"
+        ]
+      }
+    }
+  }
+}
