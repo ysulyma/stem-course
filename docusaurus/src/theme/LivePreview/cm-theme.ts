@@ -35,6 +35,10 @@ function editorThemeFromPrism(theme: PrismTheme, dark = false): Extension {
 			".cm-scroller": {
 				...theme.plain,
 			},
+      ".cm-tooltip": {
+        backgroundColor: `hsl(from ${theme.plain.backgroundColor} h s calc(l ${dark ? "+" : "-"} 5))`,
+        borderColor: `hsl(from var(--prism-sep) h s calc(l ${dark ? "+" : "-"} 5))`,
+      },
 			"&": {
 				height: "100%",
 			},
@@ -63,6 +67,7 @@ function cssFromPrismTheme(theme: PrismTheme) {
 function htmlFromPrismTheme(theme: PrismTheme) {
 	return syntaxHighlighting(
 		HighlightStyle.define([
+			{ tag: tags.comment, ...findStyle(theme.styles, "comment") },
 			{ tag: tags.meta, ...findStyle(theme.styles, "doctype") },
 			{ tag: tags.propertyName, ...findStyle(theme.styles, "attr-name") },
 			{ tag: tags.string, ...findStyle(theme.styles, "attr-value") },
@@ -75,10 +80,12 @@ function jsFromPrismTheme(theme: PrismTheme) {
 	return syntaxHighlighting(
 		HighlightStyle.define([
 			{ tag: tags.comment, ...findStyle(theme.styles, "comment") },
+			{ tag: tags.keyword, ...findStyle(theme.styles, "keyword") },
 			{ tag: tags.meta, ...findStyle(theme.styles, "doctype") },
 			{ tag: tags.propertyName, ...findStyle(theme.styles, "property-access") },
 			{ tag: tags.string, ...findStyle(theme.styles, "attr-value") },
 			{ tag: tags.typeName, ...findStyle(theme.styles, "tag") },
+
 			{ tag: tags.variableName, ...findStyle(theme.styles, "variable") },
 		]),
 	);
@@ -90,11 +97,14 @@ export const editorTheme = [
 ];
 
 export const editorThemeDark = [
-	editorThemeFromPrism(prismThemes.dracula),
+	editorThemeFromPrism(prismThemes.dracula, true),
 	syntaxHighlighting(classHighlighter),
 ];
 
-export const cssHighlighting = cssFromPrismTheme(prismThemes.github);
+export const cssHighlighting = [
+	cssFromPrismTheme(prismThemes.github),
+	syntaxHighlighting(classHighlighter),
+];
 export const cssHighlightingDark = cssFromPrismTheme(prismThemes.dracula);
 
 export const htmlHighlighting = htmlFromPrismTheme(prismThemes.github);

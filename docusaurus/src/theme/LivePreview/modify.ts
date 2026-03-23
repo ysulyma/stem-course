@@ -1,12 +1,24 @@
-class Doc {
+type Matcher = RegExp | string | ((line: string) => boolean);
+
+function matches(line: string, matcher: Matcher) {
+	if (typeof matcher === "string") {
+		return line.includes(matcher);
+	} else if (matcher instanceof RegExp) {
+		return Boolean(line.match(matcher));
+	} else {
+		return matcher(line);
+	}
+}
+
+export class Doc {
 	lines: string[];
 
 	constructor(html: string) {
 		this.lines = html.split("\n");
 	}
 
-	line(search: string) {
-		const index = this.lines.findIndex((l) => l.includes(search));
+	line(search: Matcher) {
+		const index = this.lines.findIndex((l) => matches(l, search));
 		if (index === -1) {
 			throw new Error(`no line matching "${search}"`);
 		}
@@ -14,18 +26,22 @@ class Doc {
 		return new Line(index, this);
 	}
 
-	range(start: string, end: string) {
-		const startIndex = this.lines.findIndex((l) => l.includes(start));
+	range(start: Matcher, end: Matcher) {
+		const startIndex = this.lines.findIndex((l) => matches(l, start));
 		if (startIndex === -1) {
 			throw new Error(`no line matching "${start}"`);
 		}
 
-		const endIndex = this.lines.findIndex((l) => l.includes(end));
+		const endIndex = this.lines.findIndex((l) => matches(l, end));
 		if (endIndex === -1) {
 			throw new Error(`no line matching "${end}"`);
 		}
 
 		return new LineRange(startIndex, endIndex, this);
+	}
+
+	parent() {
+		return this;
 	}
 
 	toString() {
@@ -35,7 +51,7 @@ class Doc {
 
 class Line {
 	constructor(
-		private index: number,
+		public readonly index: number,
 		public parent: Doc,
 	) {}
 
@@ -87,15 +103,25 @@ class Line {
 		return this;
 	}
 
+	to(selector: Matcher) {
+		for (let i = this.index; i < this.parent.lines.length; ++i) {
+			const line = this.parent.lines[i];
+			if (matches(line, selector)) {
+				return new LineRange(this.index, i, this.parent);
+			}
+		}
+		throw new Error(`could not find line matching ${selector}`);
+	}
+
 	toString() {
-		return this.parent.toString();
+		return this.parent.lines[this.index];
 	}
 }
 
 class LineRange {
 	constructor(
-		private startIndex: number,
-		private endIndex: number,
+		public readonly startIndex: number,
+		public readonly endIndex: number,
 		public parent: Doc,
 	) {}
 
@@ -120,7 +146,9 @@ class LineRange {
 	}
 
 	toString() {
-		return this.parent.toString();
+		return this.parent.lines
+			.slice(this.startIndex, this.endIndex + 1)
+			.join("\n");
 	}
 }
 
@@ -130,7 +158,7 @@ function leadingWhitespace(str: string) {
 
 export function modify(
 	html: string,
-	callback: (doc: Doc) => Doc | Line = (doc) => doc,
+	callback: (doc: Doc) => Doc | Line | LineRange = (doc) => doc,
 ) {
-	return callback(new Doc(html)).toString();
+	return callback(new Doc(html)).parent.toString();
 }

@@ -34,10 +34,13 @@ export function HTMLPreview({
 	}, [setColorMode]);
 
 	useEffect(() => {
-		iframe.current?.addEventListener("load", setColorMode);
+		const frame = iframe.current;
+		if (!frame) return;
+
+		frame.addEventListener("load", setColorMode);
 
 		return () => {
-			iframe.current?.removeEventListener("load", setColorMode);
+			frame.removeEventListener("load", setColorMode);
 		};
 	});
 

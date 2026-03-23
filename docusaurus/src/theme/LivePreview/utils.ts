@@ -142,7 +142,6 @@ export function getMimeType(extension: SupportedLanguage) {
  * @param filename Name of file.
  * @returns File extension.
  */
-
 export function getFileType(filename: string): SupportedLanguage {
 	return filename.slice(filename.lastIndexOf(".") + 1) as SupportedLanguage;
 }
@@ -179,7 +178,7 @@ const clientScript = `
 window.addEventListener("message", ({data}) => {
   switch (data.type) {
     case "color-scheme":
-      document.body.style.colorScheme = data.colorScheme;
+      document.documentElement.style.colorScheme = data.colorScheme;
       break;
   }
 });
