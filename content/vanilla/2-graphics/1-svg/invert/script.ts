@@ -1,8 +1,8 @@
 import type katexTypes from "katex";
 
-import { type DragListener, dragHelper, screenToSVG } from "./drag-utils-2d.js";
-
 import { $, $svg } from "/lib/utils.js";
+
+import { type DragListener, dragHelper, screenToSVG } from "./drag-utils-2d.js";
 
 declare const katex: typeof katexTypes;
 
@@ -238,51 +238,60 @@ function drawCartesianGrid({
   tickSize?: number;
 }) {
   return $svg("g", {}, [
-    ...range(27).map(
+    // vertical grid lines
+    ...range(xMin, xMax + 1).map(
       (n) =>
-        n !== 5 &&
+        n !== 0 &&
         $svg("g", {}, [
           $svg("line", {
             class: "gridline",
-            x1: n - 5,
-            x2: n - 5,
+            x1: n,
+            x2: n,
             y1: yMin,
             y2: yMax,
           }),
           $svg("line", {
             class: "axis-tick",
-            x1: n - 5,
-            x2: n - 5,
+            x1: n,
+            x2: n,
             y1: -tickSize,
             y2: tickSize,
           }),
           $svg(
             "text",
-            { class: "axis-label", dx: tickSize, dy: 0.5, x: n - xMax, y: 0 },
-            n - 5,
+            { class: "axis-label", dx: tickSize, dy: 0.5, x: n, y: 0 },
+            format(n),
           ),
         ]),
     ),
+
+    // origin
     $svg("text", { class: "axis-label", dx: 0.25, dy: 0.4, x: 0, y: 0 }, "0"),
-    ...range(10).map(
+
+    // horizontal grid lines
+    ...range(yMin, yMax + 1).map(
       (n) =>
-        n !== 5 &&
+        n !== 0 &&
         $svg("g", {}, [
           $svg("line", {
             class: "gridline",
             x1: xMin,
             x2: xMax,
-            y1: 5 - n,
-            y2: 5 - n,
+            y1: -n,
+            y2: -n,
           }),
           $svg("line", {
             class: "axis-tick",
             x1: -tickSize,
             x2: tickSize,
-            y1: 5 - n,
-            y2: 5 - n,
+            y1: -n,
+            y2: -n,
           }),
-          $svg("text", { class: "axis-label", dx: 0.4, x: 0, y: 5 - n }, n - 5),
+          $svg(
+            "text",
+            { class: "axis-label", dx: 0.4, dy: 0.2, x: 0, y: -n },
+            format(n),
+          ),
         ]),
     ),
     $svg("line", {
@@ -311,9 +320,21 @@ function graph(f: ParametricFn, a = 0, b = 1, sampling = 100) {
   return $svg("path", { class: "plot", d: instructions.join(" ") });
 }
 
-/** return the array [0, 1, …, n-1] */
-function range(n: number) {
-  return Array.from({ length: n }).map((_, index) => index);
+/**
+ * with one argument, return the array [0, 1, …, n-1]
+ * with two arguments, return the array [a, a+1, …, b-1]
+ */
+function range(a: number, b?: number) {
+  if (typeof b === "undefined") {
+    return Array.from({ length: a }).map((_, index) => index);
+  }
+  return Array.from({ length: b - a }).map((_, index) => a + index);
+}
+
+/** display negative numbers with nice minus sign */
+function format(n: number): string {
+  if (n >= 0) return String(n);
+  return `\u2212${-n}`;
 }
 
 /** Clamp a value within an interval */

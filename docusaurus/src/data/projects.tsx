@@ -52,8 +52,17 @@ const demos: ShowcaseProject[] = [
 			"https://github.com/ysulyma/stem-course/tree/main/content/vanilla/2-graphics/1-svg/binom",
 		tags: ["vanilla", "svg"],
 		title: "Binomial theorem",
+		website: "https://vanilla.stem-course.liqvidjs.org/2-graphics/1-svg/binom/",
+	},
+	{
+		description: "Use a binary search to invert monotonic functions",
+		preview: require("./showcase/invert.png"),
+		source:
+			"https://github.com/ysulyma/stem-course/tree/main/content/vanilla/2-graphics/1-svg/invert",
+		tags: ["vanilla", "svg"],
+		title: "Inverting monotonic functions",
 		website:
-			"https://vanilla.stem-course.liqvidjs.org/2-graphics/1-svg/binom.html",
+			"https://vanilla.stem-course.liqvidjs.org/2-graphics/1-svg/invert/",
 	},
 	{
 		description: "Visualize the kNN (k-nearest neighbors) algorithm",
