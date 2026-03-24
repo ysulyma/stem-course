@@ -6,7 +6,7 @@ import { lerp, makeScene } from "./three-utils.js";
 // create scene
 const { scene } = makeScene({
 	camera: {
-		position: [6.12, 3.59, 5.43],
+		position: [2.78, 0.72, 1.89],
 		up: [0, 0, 1], // math convention
 	},
 	container: document.querySelector("#container"),
@@ -48,10 +48,12 @@ const parametrization = (u, v, target) => {
 };
 {
 	const geometry = new ParametricGeometry(parametrization, 32, 32);
-	const material = new THREE.MeshPhongMaterial({
-		transparent: true,
+	const material = new THREE.MeshPhysicalMaterial({
+		metalness: 0.7,
+		roughness: 0.1,
+		// transparent: true,
 		color: 0x00ff00,
-		opacity: 0.5,
+		// opacity: 0.5,
 	});
 	material.side = THREE.DoubleSide;
 	const surface = new THREE.Mesh(geometry, material);

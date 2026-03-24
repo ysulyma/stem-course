@@ -2,6 +2,7 @@
 	const max = 30;
 	const value = 100;
 
+
 	const container = document.getElementById("container");
 
 	const table = $e("table");
@@ -12,13 +13,13 @@
 		const tr = $e("tr");
 		{
 			const th = $e("th");
-			th.appendChild(document.createTextNode("Base"));
-			tr.appendChild(th);
+			th.append("Base");
+			tr.append(th);
 		}
 		{
 			const th = $e("th");
-			th.appendChild(document.createTextNode("Value"));
-			tr.appendChild(th);
+			th.append("Value");
+			tr.append(th);
 		}
 
 		thead.appendChild(tr);

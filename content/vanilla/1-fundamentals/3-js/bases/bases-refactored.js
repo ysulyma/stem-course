@@ -18,7 +18,7 @@
 			// table header
 			table.appendChild(
 				$e("thead", [
-					$e("tr", [$e("th", [$t("Base")]), $e("th", [$t("Value")])]),
+					$e("tr", [$e("th", ["Base"]), $e("th", ["Value"])]),
 				]),
 			);
 
@@ -27,8 +27,8 @@
 			for (let base = tableStart; base <= tableEnd; ++base) {
 				tbody.appendChild(
 					$e("tr", base === 10 ? { class: "decimal" } : {}, [
-						$e("th", [$t(base)]),
-						$e("td", [$t(value.toString(base))]),
+						$e("th", [base]),
+						$e("td", [value.toString(base)]),
 					]),
 				);
 			}
@@ -43,6 +43,7 @@
 		const input = $("input");
 
 		input.addEventListener("change", (e) => {
+			console.log(e);
 			const value = parseFloat(e.target.value);
 			if (Number.isNaN(value)) return;
 
@@ -89,15 +90,10 @@
 
 		if (Array.isArray(children)) {
 			for (const child of children) {
-				node.appendChild(child);
+				node.append(child);
 			}
 		}
 
 		return node;
-	}
-
-	/** Create a text node */
-	function $t(text) {
-		return document.createTextNode(text);
 	}
 })();
