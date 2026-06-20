@@ -46,6 +46,37 @@ export type TagType =
 // prettier-ignore
 const demos: ShowcaseProject[] = [
 	{
+		description:
+			"Visualize volumes of revolution",
+		preview: require("./showcase/revolution.png"),
+		source:
+			"https://github.com/ysulyma/stem-course/tree/main/content/vanilla/3-libraries/mathquill/revolution",
+		tags: ["vanilla", "3d"],
+		title: "Volumes of revolution",
+		website:
+			"https://vanilla.stem-course.liqvidjs.org/3-libraries/mathquill/revolution/",
+	},
+	{
+		description:
+			"Illustrates the Möbius strip as a line bundle with no non-vanishing section",
+		preview: require("./showcase/mobius.png"),
+		source:
+			"https://github.com/ysulyma/stem-course/tree/main/content/vanilla/2-graphics/3-three/mobius",
+		tags: ["vanilla", "3d"],
+		title: "Möbius strip",
+		website:
+			"https://vanilla.stem-course.liqvidjs.org/2-graphics/3-three/mobius/",
+	},
+	{
+		description: "Visualization of the moduli space of elliptic curves",
+		preview: require("./showcase/moduli.png"),
+		source:
+			"https://github.com/ysulyma/stem-course/tree/main/content/vanilla/2-graphics/3-three/moduli",
+		tags: ["vanilla", "svg"],
+		title: "Moduli of elliptic curves",
+		website: "https://vanilla.stem-course.liqvidjs.org/2-graphics/3-three/moduli/",
+	},
+	{
 		description: "Visualization of the binomial theorem",
 		preview: require("./showcase/binom.png"),
 		source:
