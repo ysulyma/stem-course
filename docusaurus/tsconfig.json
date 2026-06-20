@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
-		"baseUrl": "."
+		"baseUrl": ".",
+		"types": ["@docusaurus/preset-classic"]
 	},
 	"exclude": [".docusaurus", "build"],
 	// This file is not used in compilation. It is here just for a nice editor experience.
