@@ -1,0 +1,34 @@
+config:
+  line-length: false
+  no-inline-html:
+    allowed_elements:
+      - LivePreview
+      - MDN
+      - MDXCode
+      - MDXPre
+      - abbr
+      - caption
+      - circle
+      - cite
+      - div
+      - figcaption
+      - figure
+      - g
+      - img
+      - object
+      - path
+      - rect
+      - small
+      - span
+      - svg
+      - table
+      - tbody
+      - td
+      - text
+      - tfoot
+      - th
+      - thead
+      - tr
+    table_allowed_elements:
+      - br
+  default: true
