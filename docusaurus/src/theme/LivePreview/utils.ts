@@ -173,14 +173,36 @@ export function parseMetaString(meta: string): Record<string, string> {
 	);
 }
 
-const clientScript = `
-/* update CSS without reloading */
-window.addEventListener("message", ({data}) => {
-  switch (data.type) {
-    case "color-scheme":
-      document.documentElement.style.colorScheme = data.colorScheme;
-      break;
-  }
-});
+const clientScript = `(${() => {
+	/* update CSS without reloading */
+	window.addEventListener("message", ({ data }) => {
+		switch (data.type) {
+			case "color-scheme":
+				if (hasColorScheme()) {
+					document.documentElement.style.colorScheme = data.colorScheme;
+				}
+				break;
+		}
+	});
 
-`;
+	function hasColorScheme() {
+		for (const sheet of document.styleSheets) {
+			for (const rule of sheet.cssRules) {
+				if (!(rule instanceof CSSStyleRule)) continue;
+				if (!(rule.selectorText === ":root" || rule.selectorText === "html"))
+					continue;
+
+				for (const prop of rule.style) {
+					if (
+						prop === "color-scheme" &&
+						rule.style[prop as keyof typeof rule.style] === "light dark"
+					) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+}})();`;

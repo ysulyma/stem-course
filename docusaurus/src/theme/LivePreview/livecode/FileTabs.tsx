@@ -1,4 +1,4 @@
-import { onClick } from "@liqvid/utils/react";
+import { onClickReact } from "@liqvid/utils";
 import { type State, useBoothStore } from "@lqv/codebooth";
 import { selectCmd } from "@lqv/codemirror";
 import classNames from "classnames";
@@ -67,7 +67,7 @@ export function FileTabs({
 
 	const events = useMemo(
 		() =>
-			onClick<HTMLButtonElement>((e) => {
+			onClickReact<HTMLButtonElement>((e) => {
 				select(e.currentTarget.textContent.trim());
 			}),
 		[select],

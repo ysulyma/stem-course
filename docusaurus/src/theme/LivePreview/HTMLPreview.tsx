@@ -54,13 +54,13 @@ export function HTMLPreview({
 
 				switch (language) {
 					case "css":
-						acc.css[filename] = viewContents(view);
+						acc.css![filename] = viewContents(view);
 						break;
 					case "js":
 						if (meta?.[filename]?.type === "module") {
-							acc.esm[filename] = viewContents(view);
+							acc.esm![filename] = viewContents(view);
 						} else {
-							acc.js[filename] = viewContents(view);
+							acc.js![filename] = viewContents(view);
 						}
 						break;
 					case "html":
