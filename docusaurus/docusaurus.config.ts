@@ -191,6 +191,10 @@ const config: Config = {
 					sidebarId: "tipsSidebar",
 					type: "docSidebar",
 				},
+				{
+					position: "right",
+					type: "custom-ToggleTextVideo",
+				},
 				{ label: "🖼 Showcase", position: "right", to: "showcase" },
 				// {
 				// 	position: "right",

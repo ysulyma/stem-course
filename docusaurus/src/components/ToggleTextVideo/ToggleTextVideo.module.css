@@ -1,0 +1,48 @@
+.button {
+  --svg-width: 2em;
+
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: 4px;
+  justify-content: space-between;
+  padding: 1px 2px;
+  margin: 0 0.5em;
+  overflow: hidden;
+  cursor: pointer;
+  background: light-dark(#ddd, #333);
+  border: none;
+  /* border: 1px solid var(--ifm-color-primary); */
+  border-radius: 6px;
+
+  > svg {
+    position: relative;
+    z-index: 1;
+    display: inline;
+    width: var(--svg-width);
+    height: auto;
+    fill: var(--ifm-color-primary);
+  }
+
+  &:not([aria-checked="true"]) > .video,
+  &[aria-checked="true"] > .text {
+    fill: light-dark(#ccc, #666);
+  }
+}
+
+.thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--svg-width) + 4px);
+  height: calc(100% + 2px);
+  background-color: light-dark(#f0f0f0, #fff);
+  translate: 0;
+  transition:
+    translate 150ms ease,
+    background-color 150ms ease;
+}
+
+.button:not([aria-checked="true"]) .thumb {
+  translate: 100%;
+}

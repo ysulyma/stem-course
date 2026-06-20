@@ -30,23 +30,23 @@
 }
 
 .screen-reader-only {
-  clip: rect(0 0 0 0);
-  clip-path: polygon(0 0, 0 0, 0 0);
-  white-space: nowrap;
-  border: 0;
+  position: absolute;
   width: 1px;
   height: 1px;
-  margin: -1px;
   padding: 0;
-  position: absolute;
+  margin: -1px;
   overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: polygon(0 0, 0 0, 0 0);
 }
 
 /* browser icons */
 .tabs__item {
-  align-items: center;
   display: flex;
   gap: 1ex;
+  align-items: center;
 
   > img {
     height: 1em;
@@ -54,18 +54,17 @@
 }
 
 caption {
-  border: var(--ifm-table-border-width) solid var(--ifm-table-border-color);
-  font-weight: bold;
   padding: var(--ifm-table-cell-padding);
+  font-weight: bold;
+  border: var(--ifm-table-border-width) solid var(--ifm-table-border-color);
 }
 
 table {
-  border-collapse: separate;
-  border-spacing: 0;
+  --r: 4px;
   display: table;
   overflow: hidden;
-
-  --r: 4px;
+  border-spacing: 0;
+  border-collapse: separate;
 
   > * > tr > :not(:last-child) {
     border-right: none;
@@ -110,4 +109,12 @@ kbd {
 
 video {
   margin: 0 auto;
+}
+
+body.prefers-video .text-only {
+  display: none;
+}
+
+body:not(.prefers-video) iframe[src^="/v/"] {
+  display: none;
 }
